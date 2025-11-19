@@ -170,9 +170,16 @@ export default {
   },
 
   previousQuestion() {
-    if (this.currentIndex === 0) return
+    console.log('点击上一题，当前题号:', this.currentIndex)
+    
+    if (this.currentIndex === 0) {
+      console.log('已经是第一题，无法返回')
+      return
+    }
 
     this.currentIndex--
+    console.log('跳转到题号:', this.currentIndex)
+    
     this.currentQuestion = this.questions[this.currentIndex]
     
     // 恢复该题的答题状态
@@ -181,10 +188,12 @@ export default {
       this.selectedAnswer = answered.answer
       this.showResult = answered.showResult
       this.isCorrect = answered.isCorrect
+      console.log('恢复已答题状态:', answered)
     } else {
       this.selectedAnswer = ''
       this.showResult = false
       this.isCorrect = false
+      console.log('新题目，重置状态')
     }
   },
 

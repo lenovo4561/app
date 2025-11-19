@@ -338,7 +338,7 @@ export default {
     console.log('切换导航栏，索引:', index)
     
     if (index === 0) {
-      router.replace({ uri: '/pages/Test' })
+      router.replace({ uri: '/pages/Home' })
     } else if (index === 1) {
       // 当前页面，不需要跳转
     } else if (index === 2) {

@@ -4,12 +4,12 @@
     <div class="gradient_background">
       <!-- Logo和标题 -->
       <div class="content_wrapper">
-        <image class="app_logo" src="/assets/images/logo.png"></image>
+        <image class="app_logo" src="/assets/img1/组 345@3x.jpg"></image>
         <text class="app_name">风禾测评</text>
       </div>
       
       <!-- 底部插图 -->
-      <image class="bottom_illustration" src="/assets/img1/容器@3x(3).jpg"></image>
+      <image class="bottom_illustration" src="/assets/img1/矩形 46@3x.jpg"></image>
     </div>
   </div>
 </template>
@@ -81,6 +81,8 @@ export default {
   align-items: center;
   justify-content: center;
   flex: 1;
+  z-index: 1;
+  position: relative;
 }
 
 .app_logo {
@@ -93,17 +95,19 @@ export default {
 
 .app_name {
   font-size: 64px;
-  color: #00838F;
+  color: #000000;
   font-weight: bold;
   letter-spacing: 8px;
-  text-shadow: 0 2px 8px rgba(0, 131, 143, 0.2);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .bottom_illustration {
   width: 100%;
-  height: 400px;
-  position: fixed;
-  bottom: 0;
+  height: 100%;
+  position: absolute;
+  top: 0;
   left: 0;
+  object-fit: cover;
+  z-index: 0;
 }
 </style>

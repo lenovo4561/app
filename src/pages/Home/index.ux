@@ -2,7 +2,7 @@
   <div class="page_container">
     <div class="home_content">
       <!-- 测评页内容 -->
-      <div class="item_content" show="{{currentIndex === 0}}">
+      <div class="item_content">
         <div class="test_page">
           <!-- 可滚动内容区域 -->
           <list class="scroll_content">
@@ -18,7 +18,7 @@
               <div class="featured_card_wrapper">
                 <div class="featured_card">
                   <div class="card_left">
-                    <image class="card_icon" src="/assets/images/test_icon.svg"></image>
+                    <image class="card_icon" src="/assets/img1/136@3x.jpg"></image>
                     <text class="card_title">综合心理状态评估测试题</text>
                   </div>
                   <div class="card_button" onclick="startTest">
@@ -55,62 +55,7 @@
           </list>
         </div>
       </div>
-      
-      <!-- 安全页内容 -->
-      <div class="item_content" show="{{currentIndex === 1}}">
-        <div class="safety_page">
-          <div class="safety_banner">
-            <image class="safety_banner_image" src="/assets/img1/safety_banner.jpg"></image>
-            <div class="banner_overlay">
-              <text class="banner_title">手机安全知识测试</text>
-              <text class="banner_subtitle">50道题，测测你的安全意识</text>
-            </div>
-          </div>
-          
-          <div class="safety_card" onclick="startSafetyTest">
-            <image class="safety_icon" src="/assets/images/safety_icon.svg"></image>
-            <div class="safety_info">
-              <text class="safety_title">开始安全测试</text>
-              <text class="safety_desc">答错即显示解析，边学边测</text>
-            </div>
-            <div class="start_arrow">
-              <text class="arrow_text">→</text>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- 知识页内容 -->
-      <div class="item_content" show="{{currentIndex === 2}}">
-        <div class="knowledge_page">
-          <div class="knowledge_banner">
-            <image class="knowledge_banner_image" src="/assets/img1/3x.jpg"></image>
-            <div class="banner_overlay">
-              <text class="banner_title">走进抑郁症</text>
-              <text class="banner_subtitle">了解抑郁症，科学应对</text>
-            </div>
-          </div>
-          
-          <div class="knowledge_card" onclick="goToKnowledge">
-            <image class="knowledge_icon" src="/assets/images/knowledge_icon.svg"></image>
-            <div class="knowledge_info">
-              <text class="knowledge_title">抑郁症全面知识解析</text>
-              <text class="knowledge_desc">从定义、病因到治疗的完整解读</text>
-            </div>
-            <div class="start_arrow">
-              <text class="arrow_text">→</text>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- 我的页内容 -->
-      <div class="item_content" show="{{currentIndex === 3}}">
-        <div class="content_panel">
-          <text class="page_title">我的</text>
-          <text class="page_desc">这是我的页面内容</text>
-        </div>
-      </div>
+    
     </div>
     
     <!-- 底部导航栏 -->
@@ -350,6 +295,8 @@ export default {
   width: 70px;
   height: 70px;
   margin-right: 15px;
+  border-radius: 35px;
+  object-fit: cover;
 }
 
 .card_title {
