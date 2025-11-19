@@ -1,0 +1,250 @@
+<template>
+  <div class="mine_page">
+    <!-- 顶部渐变背景 -->
+    <div class="header_gradient">
+      <!-- 用户信息区域 -->
+      <div class="user_info_section">
+        <image
+          class="user_avatar"
+          src="/pkg_main/assets/img1/容器@3x(2).jpg"
+        ></image>
+        <text class="user_name">小花匠</text>
+        <div class="user_id_container">
+          <text class="id_label">ID</text>
+          <text class="id_number">1234567890</text>
+        </div>
+      </div>
+    </div>
+
+    <!-- 功能列表区域 -->
+    <div class="content_section">
+      <div class="menu_list">
+        <!-- 隐私政策 -->
+        <div class="menu_item" onclick="openPrivacy">
+          <div class="menu_left">
+            <image
+              class="menu_icon_img"
+              src="/pkg_main/assets/img1/容器@3x(5).jpg"
+            ></image>
+            <text class="menu_title">隐私政策</text>
+          </div>
+          <text class="menu_arrow">›</text>
+        </div>
+
+        <!-- 用户协议 -->
+        <div class="menu_item" onclick="openAgreement">
+          <div class="menu_left">
+            <image
+              class="menu_icon_img"
+              src="/pkg_main/assets/img1/容器@3x(5).jpg"
+            ></image>
+            <text class="menu_title">用户协议</text>
+          </div>
+          <text class="menu_arrow">›</text>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <v-tabs
+      current-index="{{3}}"
+      tab-bar="{{tabBar}}"
+      @change-current-index="_changeCurrentIndex"
+    ></v-tabs>
+  </div>
+</template>
+
+<import name="v-tabs" src="../../components/tab/index.ux"></import>
+
+<script>
+import router from '@system.router'
+
+export default {
+  data() {
+    return {
+      userName: '小花匠',
+      userId: '1234567890',
+      tabBar: {
+        color: '#666666',
+        active_color: '#00BCD4',
+        tabs: [
+          {
+            title: '测评',
+            default_icon: '/pkg_main/assets/img1/tab_test_default.jpg',
+            active_icon: '/pkg_main/assets/img1/tab_test_active.jpg'
+          },
+          {
+            title: '安全',
+            default_icon: '/pkg_main/assets/img1/tab_safety_default.jpg',
+            active_icon: '/pkg_main/assets/img1/tab_safety_active.jpg'
+          },
+          {
+            title: '知识',
+            default_icon: '/pkg_main/assets/img1/tab_knowledge_default.jpg',
+            active_icon: '/pkg_main/assets/img1/tab_knowledge_active.jpg'
+          },
+          {
+            title: '我的',
+            default_icon: '/pkg_main/assets/img1/tab_mine_default.jpg',
+            active_icon: '/pkg_main/assets/img1/tab_mine_active.jpg'
+          }
+        ]
+      }
+    }
+  },
+
+  onInit() {
+    console.log('Mine页面初始化')
+  },
+
+  _changeCurrentIndex(evt) {
+    const index = evt.detail
+    console.log('切换导航栏，索引:', index)
+
+    if (index === 0) {
+      router.replace({ uri: '/pkg_main/pages/Home' })
+    } else if (index === 1) {
+      router.replace({ uri: '/pkg_main/pages/Safety' })
+    } else if (index === 2) {
+      router.replace({ uri: '/pkg_main/pages/Knowledge' })
+    } else if (index === 3) {
+      // 当前页面，不需要跳转
+    }
+  },
+
+  openPrivacy() {
+    console.log('打开隐私政策')
+    router.push({
+      uri: '/pkg_other/pages/Webview',
+      params: {
+        title: '隐私政策',
+        url: 'https://api.51dsp.cn/index/privacy.do?pn=com.zjfenghecp.windseed'
+      }
+    })
+  },
+
+  openAgreement() {
+    console.log('打开用户协议')
+    router.push({
+      uri: '/pkg_other/pages/Webview',
+      params: {
+        title: '用户协议',
+        url:
+          'https://api.51dsp.cn/index/agreement.do?pn=com.zjfenghecp.windseed'
+      }
+    })
+  }
+}
+</script>
+
+<style>
+.mine_page {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-image: url('/pkg_main/assets/img1/test_bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.header_gradient {
+  width: 100%;
+  padding: 80px 40px 60px 40px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user_info_section {
+  flex-direction: column;
+  align-items: center;
+}
+
+.user_avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 80px;
+  border-width: 6px;
+  border-color: #ffffff;
+  margin-bottom: 24px;
+}
+
+.user_name {
+  font-size: 44px;
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.user_id_container {
+  flex-direction: row;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 12px 32px;
+  border-radius: 24px;
+  border-width: 2px;
+  border-color: #5fc3e4;
+}
+
+.id_label {
+  font-size: 28px;
+  color: #5fc3e4;
+  font-weight: bold;
+  margin-right: 12px;
+}
+
+.id_number {
+  font-size: 28px;
+  color: #5fc3e4;
+  font-weight: 500;
+}
+
+.content_section {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 140px;
+  padding-top: 20px;
+}
+
+.menu_list {
+  width: 100%;
+  flex-direction: column;
+}
+
+.menu_item {
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 40px;
+  border-bottom-width: 1px;
+  border-bottom-color: #f0f0f0;
+}
+
+.menu_left {
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+}
+
+.menu_icon_img {
+  width: 40px;
+  height: 40px;
+  margin-right: 24px;
+  object-fit: contain;
+}
+
+.menu_title {
+  font-size: 32px;
+  color: #333333;
+  font-weight: 500;
+}
+
+.menu_arrow {
+  font-size: 56px;
+  color: #cccccc;
+  font-weight: 300;
+}
+</style>

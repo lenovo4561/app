@@ -1,6 +1,6 @@
 {
-  "package": "com.example.demo",
-  "name": "快应用示例模版",
+  "package": "com.zjfenghecp.windseed",
+  "name": "快应用",
   "versionName": "1.0.0",
   "versionCode": 1,
   "minPlatformVersion": 1200,
@@ -33,55 +33,73 @@
   "template/official": "demo-template",
   "config": {
     "logLevel": "debug",
-    "designWidth": 1080
+    "designWidth": 250
   },
+  "subpackages": [
+    {
+      "name": "pkg_main",
+      "resource": "pkg_main"
+    },
+    {
+      "name": "pkg_test",
+      "resource": "pkg_test"
+    },
+    {
+      "name": "pkg_safety",
+      "resource": "pkg_safety"
+    },
+    {
+      "name": "pkg_other",
+      "resource": "pkg_other"
+    }
+  ],
   "router": {
     "entry": "pages/Welcome",
     "pages": {
       "pages/Welcome": {
         "component": "index"
       },
-      "pages/Home": {
+      "pkg_main/pages/Home": {
         "component": "index"
       },
-      "pages/Test": {
+      "pkg_test/pages/Test": {
         "component": "index"
       },
-      "pages/TestResult": {
+      "pkg_test/pages/TestResult": {
         "component": "index"
       },
-      "pages/SafetyTest": {
+      "pkg_safety/pages/SafetyTest": {
         "component": "index"
       },
-      "pages/SafetyResult": {
+      "pkg_safety/pages/SafetyResult": {
         "component": "index"
       },
-      "pages/Demo": {
+      "pkg_other/pages/Demo": {
         "component": "index"
       },
-      "pages/DemoDetail": {
+      "pkg_other/pages/DemoDetail": {
         "component": "index"
       },
-      "pages/Knowledge": {
+      "pkg_main/pages/Knowledge": {
         "component": "index"
       },
-      "pages/Safety": {
+      "pkg_main/pages/Safety": {
         "component": "index"
       },
-      "pages/Mine": {
+      "pkg_main/pages/Mine": {
         "component": "index"
       },
-      "pages/Webview": {
+      "pkg_other/pages/Webview": {
         "component": "index"
       }
     },
     "widgets": {
-      "widgets/CardDemo": {
+      "pkg_other/widgets/CardDemo": {
         "name": "卡片名称4x2",
         "description": "快应用卡片展示",
         "component": "index",
         "type": "js",
-        "path": "/widgets/CardDemo",
+        "path": "/pkg_other/widgets/CardDemo",
         "minPlatformVersion": 1032,
         "params": {
           "size": "4x2"
@@ -101,54 +119,54 @@
         "menu": false,
         "titleBar": false
       },
-      "pages/Home": {
+      "pkg_main/pages/Home": {
         "titleBarText": "快应用示例",
         "menu": true,
         "titleBar": false
       },
-      "pages/Test": {
+      "pkg_test/pages/Test": {
         "titleBarText": "心理测评",
         "menu": false,
         "titleBar": false
       },
-      "pages/TestResult": {
+      "pkg_test/pages/TestResult": {
         "titleBarText": "测评结果",
         "menu": false,
         "titleBar": false
       },
-      "pages/SafetyTest": {
+      "pkg_safety/pages/SafetyTest": {
         "titleBarText": "安全测试",
         "menu": false,
         "titleBar": false
       },
-      "pages/SafetyResult": {
+      "pkg_safety/pages/SafetyResult": {
         "titleBarText": "测试结果",
         "menu": false,
         "titleBar": false
       },
-      "pages/Demo": {
+      "pkg_other/pages/Demo": {
         "titleBarText": "快应用示例模版",
         "menu": false
       },
-      "pages/DemoDetail": {
+      "pkg_other/pages/DemoDetail": {
         "titleBarText": "详情页"
       },
-      "pages/Knowledge": {
+      "pkg_main/pages/Knowledge": {
         "titleBarText": "抑郁症知识",
         "menu": false,
         "titleBar": false
       },
-      "pages/Safety": {
+      "pkg_main/pages/Safety": {
         "titleBarText": "手机安全",
         "menu": false,
         "titleBar": false
       },
-      "pages/Mine": {
+      "pkg_main/pages/Mine": {
         "titleBarText": "我的",
         "menu": false,
         "titleBar": false
       },
-      "pages/Webview": {
+      "pkg_other/pages/Webview": {
         "titleBarText": "加载中...",
         "menu": true
       }

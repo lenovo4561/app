@@ -1,0 +1,486 @@
+<template>
+  <div class="test_container">
+    <!-- 顶部导航栏 -->
+    <div class="header">
+      <image
+        class="back_btn"
+        src="/pkg_test/assets/img/back_icon.png"
+        onclick="goBack"
+      ></image>
+      <text class="header_title">{{
+        testTitle || '综合心理状态评估测试题'
+      }}</text>
+    </div>
+
+    <!-- 进度条 -->
+    <div class="progress_container">
+      <div class="progress_bar">
+        <div class="progress_fill" style="width: {{progress}}%"></div>
+      </div>
+      <text class="progress_text"
+        >{{ currentIndex + 1 }}/{{ totalQuestions }}</text
+      >
+    </div>
+
+    <!-- 题目卡片 -->
+    <div class="question_card">
+      <text class="question_text">{{ currentQuestion.question }}</text>
+
+      <!-- 选项列表 -->
+      <div class="options_container">
+        <div
+          class="option_item {{selectedAnswer === 0 ? 'selected' : ''}}"
+          onclick="selectOption"
+          data-index="0"
+        >
+          <div
+            class="option_label {{selectedAnswer === 0 ? 'label_selected' : ''}}"
+          >
+            <text
+              class="label_text {{selectedAnswer === 0 ? 'label_text_selected' : ''}}"
+              >{{ currentQuestion.options[0].label }}</text
+            >
+          </div>
+          <text
+            class="option_text {{selectedAnswer === 0 ? 'text_selected' : ''}}"
+            >{{ currentQuestion.options[0].text }}</text
+          >
+          <image
+            class="check_icon"
+            src="/pkg_test/assets/img/check_icon_white.png"
+            show="{{selectedAnswer === 0}}"
+          ></image>
+        </div>
+
+        <div
+          class="option_item {{selectedAnswer === 1 ? 'selected' : ''}}"
+          onclick="selectOption"
+          data-index="1"
+        >
+          <div
+            class="option_label {{selectedAnswer === 1 ? 'label_selected' : ''}}"
+          >
+            <text
+              class="label_text {{selectedAnswer === 1 ? 'label_text_selected' : ''}}"
+              >{{ currentQuestion.options[1].label }}</text
+            >
+          </div>
+          <text
+            class="option_text {{selectedAnswer === 1 ? 'text_selected' : ''}}"
+            >{{ currentQuestion.options[1].text }}</text
+          >
+          <image
+            class="check_icon"
+            src="/pkg_test/assets/img/check_icon_white.png"
+            show="{{selectedAnswer === 1}}"
+          ></image>
+        </div>
+
+        <div
+          class="option_item {{selectedAnswer === 2 ? 'selected' : ''}}"
+          onclick="selectOption"
+          data-index="2"
+        >
+          <div
+            class="option_label {{selectedAnswer === 2 ? 'label_selected' : ''}}"
+          >
+            <text
+              class="label_text {{selectedAnswer === 2 ? 'label_text_selected' : ''}}"
+              >{{ currentQuestion.options[2].label }}</text
+            >
+          </div>
+          <text
+            class="option_text {{selectedAnswer === 2 ? 'text_selected' : ''}}"
+            >{{ currentQuestion.options[2].text }}</text
+          >
+          <image
+            class="check_icon"
+            src="/pkg_test/assets/img/check_icon_white.png"
+            show="{{selectedAnswer === 2}}"
+          ></image>
+        </div>
+
+        <div
+          class="option_item {{selectedAnswer === 3 ? 'selected' : ''}}"
+          onclick="selectOption"
+          data-index="3"
+        >
+          <div
+            class="option_label {{selectedAnswer === 3 ? 'label_selected' : ''}}"
+          >
+            <text
+              class="label_text {{selectedAnswer === 3 ? 'label_text_selected' : ''}}"
+              >{{ currentQuestion.options[3].label }}</text
+            >
+          </div>
+          <text
+            class="option_text {{selectedAnswer === 3 ? 'text_selected' : ''}}"
+            >{{ currentQuestion.options[3].text }}</text
+          >
+          <image
+            class="check_icon"
+            src="/pkg_test/assets/img/check_icon_white.png"
+            show="{{selectedAnswer === 3}}"
+          ></image>
+        </div>
+      </div>
+
+      <!-- 下一题按钮 -->
+      <div
+        class="next_btn {{selectedAnswer !== null ? 'active' : ''}}"
+        onclick="nextQuestion"
+      >
+        <text class="next_btn_text">{{
+          currentIndex === totalQuestions - 1 ? '查看结果' : '下一题'
+        }}</text>
+      </div>
+
+      <!-- 提示文字 -->
+      <text class="tip_text"
+        >注：本测评仅为初步的心理状态评估，不能替代专业的心理诊断。若您感觉心理困扰较为严重，务必及时寻求专业医疗机构的帮助。</text
+      >
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import { testQuestions } from '../../helper/testData'
+import { getTestById } from '../../helper/dimensionsTestData'
+
+export default {
+  data() {
+    return {
+      dimensionId: '',
+      testId: '',
+      testTitle: '',
+      currentIndex: 0,
+      totalQuestions: 5,
+      selectedAnswer: null,
+      answers: [],
+      currentQuestion: {},
+      testData: null,
+      scoringRules: null
+    }
+  },
+
+  computed: {
+    progress() {
+      return Math.floor((this.currentIndex / this.totalQuestions) * 100)
+    }
+  },
+
+  onInit(params) {
+    // 接收路由参数
+    if (params && params.dimensionId) {
+      this.dimensionId = params.dimensionId
+      this.testId = params.testId
+      this.testTitle = params.testTitle
+    }
+
+    console.log('Test onInit, 接收参数:', {
+      dimensionId: this.dimensionId,
+      testId: this.testId,
+      testTitle: this.testTitle
+    })
+    this.resetTest()
+  },
+
+  onShow() {
+    // 每次显示页面时重置测试
+    this.resetTest()
+  },
+
+  resetTest() {
+    this.currentIndex = 0
+    this.selectedAnswer = null
+
+    // 判断是综合测试还是维度测试
+    if (this.dimensionId && this.testId) {
+      // 维度测试：从dimensionsTestData加载
+      this.testData = getTestById(this.dimensionId, this.testId)
+      console.log('加载维度测试数据:', this.testData)
+
+      if (this.testData && this.testData.questions) {
+        this.totalQuestions = this.testData.questions.length
+        this.currentQuestion = this.testData.questions[0]
+        this.scoringRules = this.testData.scoring.ranges
+        this.answers = new Array(this.totalQuestions).fill(null)
+        console.log('维度测试题目总数:', this.totalQuestions)
+      } else {
+        console.error('未找到测试数据:', this.dimensionId, this.testId)
+        // 回退到综合测试
+        this.loadDefaultTest()
+      }
+    } else {
+      // 综合测试：使用原来的testQuestions
+      this.loadDefaultTest()
+    }
+  },
+
+  loadDefaultTest() {
+    this.totalQuestions = 50
+    this.currentQuestion = testQuestions[0]
+    this.answers = new Array(this.totalQuestions).fill(null)
+    this.testData = null
+    this.scoringRules = null
+    console.log('加载综合测试，题目总数:', this.totalQuestions)
+    console.log('测试已重置')
+  },
+
+  selectOption(evt) {
+    const index = evt.target.attr.dataIndex
+    console.log('选择答案:', index)
+    this.selectedAnswer = parseInt(index)
+  },
+
+  nextQuestion() {
+    if (this.selectedAnswer === null) {
+      this.$app.$def.prompt.showToast({
+        message: '请选择一个选项'
+      })
+      return
+    }
+
+    // 保存答案
+    this.answers[this.currentIndex] = {
+      questionId: this.currentQuestion.id,
+      optionIndex: this.selectedAnswer,
+      score: this.currentQuestion.options[this.selectedAnswer].score
+    }
+
+    // 判断是否最后一题
+    if (this.currentIndex === this.totalQuestions - 1) {
+      // 计算总分并跳转到结果页
+      this.calculateAndShowResult()
+    } else {
+      // 下一题
+      this.currentIndex++
+
+      // 根据测试类型加载题目
+      if (this.testData && this.testData.questions) {
+        this.currentQuestion = this.testData.questions[this.currentIndex]
+      } else {
+        this.currentQuestion = testQuestions[this.currentIndex]
+      }
+
+      this.selectedAnswer = this.answers[this.currentIndex]
+        ? this.answers[this.currentIndex].optionIndex
+        : null
+    }
+  },
+
+  calculateAndShowResult() {
+    let totalScore = 0
+    this.answers.forEach(answer => {
+      if (answer) {
+        totalScore += answer.score
+      }
+    })
+
+    console.log('Total score:', totalScore)
+    console.log('Answers:', JSON.stringify(this.answers))
+
+    // 跳转到结果页
+    router.push({
+      uri: '/pkg_test/pages/TestResult',
+      params: {
+        score: totalScore.toString(),
+        dimensionId: this.dimensionId || '',
+        testId: this.testId || '',
+        testTitle: this.testTitle || '综合心理状态评估'
+      }
+    })
+  },
+
+  goBack() {
+    router.back()
+  }
+}
+</script>
+
+<style>
+.test_container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-image: url('/pkg_test/assets/img/test_bg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  align-items: center;
+}
+
+/* 顶部导航 */
+.header {
+  width: 100%;
+  height: 100px;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 30px;
+}
+
+.back_btn {
+  width: 48px;
+  height: 48px;
+  margin-right: 20px;
+  object-fit: contain;
+}
+
+.header_title {
+  font-size: 36px;
+  color: #333333;
+  font-weight: bold;
+  flex: 1;
+  text-align: center;
+  margin-right: 68px; /* 平衡返回按钮宽度，使标题居中 */
+}
+
+/* 进度条 */
+.progress_container {
+  width: 92%;
+  padding: 20px 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.progress_bar {
+  flex: 1;
+  height: 16px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.progress_fill {
+  height: 16px;
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+  border-radius: 8px;
+}
+
+.progress_text {
+  font-size: 28px;
+  color: #333333;
+  font-weight: 500;
+}
+
+/* 题目卡片 */
+.question_card {
+  width: 92%;
+  flex: 1;
+  margin-bottom: 40px;
+  padding: 60px 40px 40px 40px;
+  flex-direction: column;
+  background-image: url('/pkg_test/assets/img/question_card_bg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.question_text {
+  width: 100%;
+  font-size: 36px;
+  color: #333333;
+  font-weight: bold;
+  line-height: 50px;
+  margin-bottom: 60px;
+  margin-top: 20px;
+}
+
+/* 选项列表 */
+.options_container {
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 40px;
+  flex: 1;
+}
+
+.option_item {
+  width: 100%;
+  min-height: 110px;
+  background-color: #e8f4fd;
+  border-radius: 55px;
+  margin-bottom: 30px;
+  padding: 20px 30px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.selected {
+  background-color: #29b6f6 !important;
+}
+
+.option_label {
+  width: 64px;
+  height: 64px;
+  background-color: #29b6f6;
+  border-radius: 32px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 24px;
+}
+
+.label_selected {
+  background-color: #ffffff;
+}
+
+.label_text {
+  font-size: 32px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.label_text_selected {
+  color: #29b6f6;
+}
+
+.option_text {
+  flex: 1;
+  font-size: 30px;
+  color: #333333;
+  lines: 2;
+}
+
+.text_selected {
+  color: #ffffff !important;
+  font-weight: bold;
+}
+
+.check_icon {
+  width: 44px;
+  height: 44px;
+  margin-left: 20px;
+  object-fit: contain;
+}
+
+/* 下一题按钮 */
+.next_btn {
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.next_btn.active {
+  /* 激活状态样式，如果需要区分 */
+}
+
+.next_btn_text {
+  font-size: 36px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* 提示文字 */
+.tip_text {
+  width: 100%;
+  font-size: 22px;
+  color: #ff5252;
+  line-height: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+</style>

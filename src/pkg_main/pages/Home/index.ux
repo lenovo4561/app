@@ -1,0 +1,745 @@
+<template>
+  <div class="page_container">
+    <div class="home_content">
+      <!-- 测评页内容 -->
+      <div class="item_content">
+        <div class="test_page">
+          <!-- 可滚动内容区域 -->
+          <list class="scroll_content">
+            <!-- 顶部区域：包含Banner和重叠的卡片 -->
+            <list-item type="top_area">
+              <div class="top_area">
+                <!-- 背景与Banner内容 -->
+                <div class="banner_container"></div>
+
+                <!-- 综合测评卡片 -->
+                <div class="featured_card_wrapper">
+                  <div class="featured_card">
+                    <div class="hot_badge">
+                      <text class="hot_text">HOT</text>
+                    </div>
+                    <div class="card_left">
+                      <image
+                        class="card_icon"
+                        src="/pkg_main/assets/img1/136@3x.jpg"
+                      ></image>
+                      <text class="card_title">综合心理状态评估测试题</text>
+                    </div>
+                    <div class="card_button" onclick="startTest">
+                      <text class="button_text">立即测试</text>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </list-item>
+
+            <!-- 精选测评标题 -->
+            <list-item type="title">
+              <div class="section_title">
+                <text class="title_text">精选测评</text>
+              </div>
+            </list-item>
+
+            <!-- 精选测评列表 -->
+            <block for="(index, item) in testList">
+              <list-item type="test{{index}}">
+                <div
+                  class="test_item"
+                  style="padding-bottom: {{index === testList.length - 1 ? '130px' : '20px'}}"
+                >
+                  <div
+                    class="test_item_content"
+                    onclick="startDimensionTest"
+                    data-index="{{index}}"
+                  >
+                    <image class="test_image" src="{{item.image}}"></image>
+                    <div
+                      class="test_badge"
+                      style="background-color: {{item.badgeColor}}"
+                    >
+                      <text class="badge_text">{{ item.badge }}</text>
+                    </div>
+                    <div class="title_mask">
+                      <text class="test_title">{{ item.title }}</text>
+                    </div>
+                  </div>
+                </div>
+              </list-item>
+            </block>
+          </list>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <v-tabs
+      current-index="{{currentIndex}}"
+      tab-bar="{{tabBar}}"
+      @change-current-index="_changeCurrentIndex"
+    ></v-tabs>
+  </div>
+</template>
+
+<!-- 引入底部导航栏组件 -->
+<import name="v-tabs" src="../../components/tab/index.ux"></import>
+
+<script>
+import router from '@system.router'
+
+export default {
+  data() {
+    return {
+      currentIndex: 0, // 当前选中的标签索引
+      tabBar: {
+        color: '#999999',
+        active_color: '#00BCD4',
+        tabs: [
+          {
+            title: '测评',
+            default_icon: '/pkg_main/assets/img1/tab_test_default.jpg',
+            active_icon: '/pkg_main/assets/img1/tab_test_active.jpg'
+          },
+          {
+            title: '安全',
+            default_icon: '/pkg_main/assets/img1/tab_safety_default.jpg',
+            active_icon: '/pkg_main/assets/img1/tab_safety_active.jpg'
+          },
+          {
+            title: '知识',
+            default_icon: '/pkg_main/assets/img1/tab_knowledge_default.jpg',
+            active_icon: '/pkg_main/assets/img1/tab_knowledge_active.jpg'
+          },
+          {
+            title: '我的',
+            default_icon: '/pkg_main/assets/img1/tab_mine_default.jpg',
+            active_icon: '/pkg_main/assets/img1/tab_mine_active.jpg'
+          }
+        ]
+      },
+      testList: [
+        {
+          id: 'emotion_1',
+          image: '/pkg_main/assets/img/1.你的情感共情力有多强？.jpg',
+          badge: '情感',
+          badgeColor: '#E91E63',
+          title: '你的情感共情力有多强？',
+          dimensionId: 'emotion'
+        },
+        {
+          id: 'career_1',
+          image: '/pkg_main/assets/img/9.你在工作中的抗压能力如何？.jpg',
+          badge: '事业',
+          badgeColor: '#2196F3',
+          title: '你在工作中的抗压能力如何？',
+          dimensionId: 'career'
+        },
+        {
+          id: 'family_1',
+          image: '/pkg_main/assets/img/13.你在家庭中的沟通协调能力如何？.jpg',
+          badge: '家庭',
+          badgeColor: '#9C27B0',
+          title: '你在家庭中的沟通协调能力如何？',
+          dimensionId: 'family'
+        },
+        {
+          id: 'interest_1',
+          image: '/pkg_main/assets/img/17.你的生活趣味偏好是哪类？.jpg',
+          badge: '趣味',
+          badgeColor: '#FF9800',
+          title: '你的生活趣味偏好是哪类？',
+          dimensionId: 'interest'
+        },
+        {
+          id: 'personality_1',
+          image: '/pkg_main/assets/img/5.你是典型的外向者还是内向者？.jpg',
+          badge: '性格',
+          badgeColor: '#FF5722',
+          title: '你是典型的外向者还是内向者？',
+          dimensionId: 'personality'
+        },
+        {
+          id: 'emotion_2',
+          image: '/pkg_main/assets/img/2.你在亲密关系中的安全感源自哪里？.jpg',
+          badge: '情感',
+          badgeColor: '#E91E63',
+          title: '你在亲密关系中的安全感源自哪里？',
+          dimensionId: 'emotion'
+        },
+        {
+          id: 'emotion_3',
+          image: '/pkg_main/assets/img/3.你处理情感冲突的能力等级？.jpg',
+          badge: '情感',
+          badgeColor: '#E91E63',
+          title: '你处理情感冲突的能力等级？',
+          dimensionId: 'emotion'
+        },
+        {
+          id: 'emotion_4',
+          image: '/pkg_main/assets/img/4.你对情感的表达倾向是怎样的？.jpg',
+          badge: '情感',
+          badgeColor: '#E91E63',
+          title: '你对情感的表达倾向是怎样的？',
+          dimensionId: 'emotion'
+        },
+        {
+          id: 'personality_2',
+          image: '/pkg_main/assets/img/6.你的做事风格是果断型还是谨慎型？.jpg',
+          badge: '性格',
+          badgeColor: '#FF5722',
+          title: '你的做事风格是果断型还是谨慎型？',
+          dimensionId: 'personality'
+        },
+        {
+          id: 'personality_3',
+          image: '/pkg_main/assets/img/7.你是乐观主义者还是悲观主义者？.jpg',
+          badge: '性格',
+          badgeColor: '#FF5722',
+          title: '你是乐观主义者还是悲观主义者？',
+          dimensionId: 'personality'
+        },
+        {
+          id: 'personality_4',
+          image: '/pkg_main/assets/img/8.你是否具有较强的责任心？.jpg',
+          badge: '性格',
+          badgeColor: '#FF5722',
+          title: '你是否具有较强的责任心？',
+          dimensionId: 'personality'
+        },
+        {
+          id: 'career_2',
+          image: '/pkg_main/assets/img/10.你是否具备领导潜质？.jpg',
+          badge: '事业',
+          badgeColor: '#2196F3',
+          title: '你是否具备领导潜质？',
+          dimensionId: 'career'
+        },
+        {
+          id: 'career_3',
+          image: '/pkg_main/assets/img/11.你对职业发展的规划清晰度如何？.jpg',
+          badge: '事业',
+          badgeColor: '#2196F3',
+          title: '你对职业发展的规划清晰度如何？',
+          dimensionId: 'career'
+        },
+        {
+          id: 'career_4',
+          image: '/pkg_main/assets/img/12.你在工作中的创新能力怎么样？.jpg',
+          badge: '事业',
+          badgeColor: '#2196F3',
+          title: '你在工作中的创新能力怎么样？',
+          dimensionId: 'career'
+        },
+        {
+          id: 'family_2',
+          image: '/pkg_main/assets/img/14.你对家庭责任的承担程度如何？.jpg',
+          badge: '家庭',
+          badgeColor: '#9C27B0',
+          title: '你对家庭责任的承担程度如何？',
+          dimensionId: 'family'
+        },
+        {
+          id: 'family_3',
+          image: '/pkg_main/assets/img/15.你营造家庭幸福感的能力如何？.jpg',
+          badge: '家庭',
+          badgeColor: '#9C27B0',
+          title: '你营造家庭幸福感的能力如何？',
+          dimensionId: 'family'
+        },
+        {
+          id: 'family_4',
+          image: '/pkg_main/assets/img/16.你处理家庭边界感的能力如何？.jpg',
+          badge: '家庭',
+          badgeColor: '#9C27B0',
+          title: '你处理家庭边界感的能力如何？',
+          dimensionId: 'family'
+        },
+        {
+          id: 'interest_2',
+          image: '/pkg_main/assets/img/18.你的吃货属性有多强？.jpg',
+          badge: '趣味',
+          badgeColor: '#FF9800',
+          title: '你的吃货属性有多强？',
+          dimensionId: 'interest'
+        },
+        {
+          id: 'interest_3',
+          image: '/pkg_main/assets/img/19.你的旅行风格是什么样的？.jpg',
+          badge: '趣味',
+          badgeColor: '#FF9800',
+          title: '你的旅行风格是什么样的？',
+          dimensionId: 'interest'
+        },
+        {
+          id: 'interest_4',
+          image: '/pkg_main/assets/img/20.你的宠物偏好暴露了什么？.jpg',
+          badge: '趣味',
+          badgeColor: '#FF9800',
+          title: '你的宠物偏好暴露了什么？',
+          dimensionId: 'interest'
+        }
+      ]
+    }
+  },
+
+  onInit() {
+    // 监听导航栏切换事件
+    this.$on('changeCurrentIndex', this._changeCurrentIndex)
+    console.log('<<< Home页面初始化，currentIndex:', this.currentIndex)
+  },
+
+  onShow() {
+    console.info('Home页面显示，currentIndex:', this.currentIndex)
+  },
+
+  onHide() {
+    console.info('Home页面隐藏')
+  },
+
+  startTest() {
+    // 综合心理状态评估测试（原50题）
+    router.push({
+      uri: '/pkg_test/pages/Test'
+    })
+  },
+
+  startDimensionTest(evt) {
+    // 精选测评项点击
+    const index = evt.target.attr.dataIndex
+    const test = this.testList[parseInt(index)]
+
+    console.log('点击测评:', test.title)
+    console.log('维度ID:', test.dimensionId)
+    console.log('测试ID:', test.id)
+
+    // 跳转到测评页面，传递维度和测试信息
+    router.push({
+      uri: '/pkg_test/pages/Test',
+      params: {
+        dimensionId: test.dimensionId,
+        testId: test.id,
+        testTitle: test.title
+      }
+    })
+  },
+
+  startSafetyTest() {
+    // 跳转到安全测试页面
+    console.log('开始安全测试')
+    router.push({
+      uri: '/pkg_safety/pages/SafetyTest'
+    })
+  },
+
+  goToKnowledge() {
+    // 跳转到知识页面
+    console.log('跳转到抑郁症知识页面')
+    router.push({
+      uri: '/pkg_main/pages/Knowledge'
+    })
+  },
+
+  _changeCurrentIndex(evt) {
+    let index = evt.detail
+    console.info('切换到第' + index + '个标签')
+
+    // 如果点击的是"安全"标签（index === 1），直接跳转到安全页面
+    if (index === 1) {
+      console.log('点击安全导航，跳转到Safety页面')
+      router.push({
+        uri: '/pkg_main/pages/Safety'
+      })
+      return // 直接返回,不更新currentIndex,避免显示过渡页面
+    }
+
+    // 如果点击的是"知识"标签（index === 2），直接跳转到知识页面
+    if (index === 2) {
+      console.log('点击知识导航，跳转到Knowledge页面')
+      router.push({
+        uri: '/pkg_main/pages/Knowledge'
+      })
+      return // 直接返回,不更新currentIndex,避免显示过渡页面
+    }
+
+    // 如果点击的是"我的"标签（index === 3），直接跳转到Mine页面
+    if (index === 3) {
+      console.log('点击我的导航，跳转到Mine页面')
+      router.push({
+        uri: '/pkg_main/pages/Mine'
+      })
+      return // 直接返回,不更新currentIndex,避免显示过渡页面
+    }
+
+    // 其他标签(测评)正常切换
+    this.currentIndex = index
+  }
+}
+</script>
+
+<style>
+.page_container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+.home_content {
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  background-image: url('/pkg_main/assets/img1/1@3x.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.item_content {
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* 测评页样式 */
+.test_page {
+  flex: 1;
+  width: 100%;
+  background-image: url('/pkg_main/assets/img1/test_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.scroll_content {
+  width: 100%;
+  height: 100%;
+}
+
+/* 顶部区域样式 */
+.top_area {
+  flex-direction: column;
+  width: 100%;
+}
+
+.banner_container {
+  width: 100%;
+  height: 620px;
+  background-image: url('/pkg_main/assets/img1/3x.jpg');
+  background-size: cover;
+  background-position: top;
+}
+
+/* 综合测评卡片 */
+.featured_card_wrapper {
+  width: 100%;
+  padding: 0 30px;
+  margin-top: -100px; /* 向上重叠 */
+  margin-bottom: 30px;
+}
+
+.featured_card {
+  width: 100%;
+  height: 140px;
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 20px 30px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.card_left {
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+}
+
+.card_icon {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.card_title {
+  font-size: 30px;
+  color: #333333;
+  font-weight: bold;
+  lines: 2;
+}
+
+.card_button {
+  width: 160px;
+  height: 70px;
+  background: linear-gradient(90deg, #81d4fa 0%, #29b6f6 100%);
+  border-radius: 35px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.button_text {
+  font-size: 26px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.hot_badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 86px;
+  height: 40px;
+  background: linear-gradient(90deg, #ff4081 0%, #f50057 100%);
+  border-top-right-radius: 24px;
+  border-bottom-left-radius: 24px;
+  justify-content: center;
+  align-items: center;
+}
+
+.hot_text {
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* 精选测评标题 */
+.section_title {
+  width: 100%;
+  padding: 20px 30px 20px 30px;
+}
+
+.title_text {
+  font-size: 34px;
+  color: #333333;
+  font-weight: bold;
+}
+
+/* 测评列表 */
+.test_item {
+  width: 100%;
+  padding: 0 30px 16px 30px;
+}
+
+.test_item_content {
+  width: 100%;
+  height: 220px;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.test_image {
+  width: 100%;
+  height: 220px;
+}
+
+.test_badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.badge_text {
+  font-size: 22px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.test_title {
+  font-size: 30px;
+  color: #ffffff;
+  font-weight: 500;
+  lines: 1;
+  text-overflow: ellipsis;
+}
+
+.title_mask {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  padding: 0 24px;
+}
+
+/* 安全页面样式 */
+.safety_page {
+  flex: 1;
+  flex-direction: column;
+  padding: 40px;
+  padding-bottom: 130px;
+}
+
+.safety_banner {
+  width: 100%;
+  height: 400px;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.safety_banner_image {
+  width: 100%;
+  height: 400px;
+}
+
+.banner_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(102, 126, 234, 0.7);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner_title {
+  font-size: 48px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.banner_subtitle {
+  font-size: 32px;
+  color: #ffffff;
+}
+
+.safety_card {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 40px;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.safety_icon {
+  width: 100px;
+  height: 100px;
+  margin-right: 30px;
+}
+
+.safety_info {
+  flex: 1;
+  flex-direction: column;
+}
+
+.safety_title {
+  font-size: 36px;
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.safety_desc {
+  font-size: 28px;
+  color: #999999;
+}
+
+.start_arrow {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow_text {
+  font-size: 36px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* 知识页样式 */
+.knowledge_page {
+  flex: 1;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.knowledge_banner {
+  width: 100%;
+  height: 400px;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.knowledge_banner_image {
+  width: 100%;
+  height: 400px;
+}
+
+.knowledge_card {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 40px;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.knowledge_icon {
+  width: 100px;
+  height: 100px;
+  margin-right: 30px;
+}
+
+.knowledge_info {
+  flex: 1;
+  flex-direction: column;
+}
+
+.knowledge_title {
+  font-size: 36px;
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.knowledge_desc {
+  font-size: 28px;
+  color: #999999;
+}
+
+/* 其他页面样式 */
+.content_panel {
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+}
+
+.page_title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+.page_desc {
+  font-size: 32px;
+  color: #666666;
+  text-align: center;
+}
+</style>

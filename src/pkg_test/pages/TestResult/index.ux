@@ -1,0 +1,347 @@
+<template>
+  <div class="page-container">
+    <!-- 顶部导航栏 -->
+    <div class="header">
+      <div class="back-btn-wrapper" onclick="goBack">
+        <image
+          class="back-btn"
+          src="/pkg_test/assets/img/back_icon.png"
+        ></image>
+      </div>
+      <text class="header-title">测评结果</text>
+      <div class="header-placeholder"></div>
+    </div>
+    #
+    <!-- 滚动内容区域 -->
+    <scroll class="scroll-content" scroll-y="true">
+      <div class="content-wrapper">
+        <!-- 结果卡片与人物 Stack -->
+        <stack class="result-stack">
+          <!-- 卡片层 (在下) -->
+          <div class="card-container">
+            <div class="result-card">
+              <!-- 标签 -->
+              <div class="tag-wrapper">
+                <text class="tag-text">测试结果</text>
+              </div>
+
+              <!-- 标题 -->
+              <div class="title-wrapper">
+                <text class="result-title">{{
+                  result.title || '你的心理状态整体优秀'
+                }}</text>
+                <image
+                  class="title-underline"
+                  src="/pkg_main/assets/img1/路径 12@3x.jpg"
+                ></image>
+              </div>
+
+              <!-- 详细内容 -->
+              <div class="desc-wrapper">
+                <text class="result-desc">{{ result.content }}</text>
+              </div>
+            </div>
+          </div>
+
+          <!-- 人物层 (在上) -->
+          <div class="character-container">
+            <image
+              class="character-img"
+              src="/pkg_main/assets/img1/图片@3x(1).png"
+            ></image>
+          </div>
+        </stack>
+
+        <!-- 底部按钮组 -->
+        <div class="button-group">
+          <div class="btn btn-restart" onclick="restart">
+            <text class="btn-text">重新测试</text>
+          </div>
+          <div class="btn btn-home" onclick="goHome">
+            <text class="btn-text">返回首页</text>
+          </div>
+        </div>
+
+        <!-- 底部提示 -->
+        <text class="footer-tip"
+          >注：本测评仅为初步的心理状态评估，不能替代专业的心理诊断。若你感觉心理困扰较为严重，务必及时寻求专业医疗机构的帮助。</text
+        >
+      </div>
+    </scroll>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import { getTestResult } from '../../helper/testData'
+import {
+  getTestById,
+  calculateTestResult
+} from '../../helper/dimensionsTestData'
+
+export default {
+  data() {
+    return {
+      score: 0,
+      dimensionId: '',
+      testId: '',
+      testTitle: '',
+      result: {
+        level: '',
+        title: '',
+        content: ''
+      }
+    }
+  },
+
+  onInit(params) {
+    // 接收路由参数
+    if (params) {
+      this.score = params.score || 0
+      this.dimensionId = params.dimensionId || ''
+      this.testId = params.testId || ''
+      this.testTitle = params.testTitle || ''
+    }
+
+    console.log('TestResult onInit, 接收参数:', {
+      score: this.score,
+      dimensionId: this.dimensionId,
+      testId: this.testId,
+      testTitle: this.testTitle
+    })
+
+    const scoreValue = parseInt(this.score) || 150
+    console.log('Score value:', scoreValue)
+
+    // 判断是维度测试还是综合测试
+    if (this.dimensionId && this.testId) {
+      // 维度测试：使用对应维度的评分规则
+      const testData = getTestById(this.dimensionId, this.testId)
+      if (testData && testData.scoring && testData.scoring.ranges) {
+        this.result = calculateTestResult(scoreValue, testData.scoring.ranges)
+        console.log('维度测试结果:', JSON.stringify(this.result))
+      } else {
+        console.error('未找到测试评分规则')
+        this.result = getTestResult(scoreValue)
+      }
+    } else {
+      // 综合测试：使用原来的评分规则
+      this.result = getTestResult(scoreValue)
+      console.log('综合测试结果:', JSON.stringify(this.result))
+    }
+  },
+
+  restart() {
+    console.log('重新测试')
+    // 如果是维度测试，传递参数回到对应的测试
+    if (this.dimensionId && this.testId) {
+      router.replace({
+        uri: '/pkg_test/pages/Test',
+        params: {
+          dimensionId: this.dimensionId,
+          testId: this.testId,
+          testTitle: this.testTitle
+        }
+      })
+    } else {
+      router.replace({
+        uri: '/pkg_test/pages/Test'
+      })
+    }
+  },
+
+  goHome() {
+    console.log('返回首页')
+    router.clear()
+    router.replace({
+      uri: '/pkg_main/pages/Home'
+    })
+  },
+
+  goBack() {
+    router.back()
+  }
+}
+</script>
+
+<style>
+.page-container {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  /* background-color: #E0F7FA; */
+  background-image: url('/pkg_main/assets/img1/test_bg.jpg');
+  background-size: cover;
+  background-position: top;
+}
+
+/* 顶部导航 */
+.header {
+  width: 100%;
+  height: 100px;
+  padding: 0 30px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-btn-wrapper {
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.back-btn {
+  width: 40px;
+  height: 40px;
+}
+
+.header-title {
+  font-size: 36px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.header-placeholder {
+  width: 60px;
+}
+
+/* 滚动区域 */
+.scroll-content {
+  flex: 1;
+  width: 100%;
+}
+
+.content-wrapper {
+  padding: 20px 30px 50px 30px;
+  flex-direction: column;
+}
+
+/* Stack 布局 */
+.result-stack {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.card-container {
+  width: 100%;
+  padding-top: 60px; /* 给人物头部留出空间 */
+  flex-direction: column;
+}
+
+.result-card {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 40px;
+  padding-top: 60px;
+  flex-direction: column;
+  min-height: 900px;
+}
+
+.tag-wrapper {
+  background-color: #29b6f6;
+  border-radius: 8px;
+  padding: 8px 16px;
+  align-self: flex-start;
+  margin-bottom: 20px;
+}
+
+.tag-text {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.title-wrapper {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.result-title {
+  font-size: 36px;
+  color: #000000;
+  line-height: 50px;
+  font-weight: bold;
+  lines: 0;
+}
+
+.title-underline {
+  width: 100%;
+  height: 15px;
+  object-fit: contain;
+  margin-top: 5px;
+}
+
+.desc-wrapper {
+  width: 100%;
+  flex: 1;
+  margin-top: 60px; /* 确保内容在人物底部开始 */
+  background-image: url('/pkg_main/assets/img1/trophy_decoration.png');
+  background-size: contain;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  padding-bottom: 40px;
+}
+
+.result-desc {
+  font-size: 28px;
+  color: #333333;
+  line-height: 48px;
+  text-align: left;
+}
+
+/* 人物层 */
+.character-container {
+  width: 100%;
+  justify-content: flex-end; /* 靠右 */
+  align-items: flex-start; /* 靠上 */
+  padding-right: 20px;
+}
+
+.character-img {
+  width: 260px;
+  height: 320px;
+  object-fit: contain;
+}
+
+/* 按钮组 */
+.button-group {
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  width: 330px;
+  height: 90px;
+  border-radius: 45px;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-restart {
+  background: linear-gradient(90deg, #80d8ff 0%, #40c4ff 100%);
+}
+
+.btn-home {
+  background: linear-gradient(90deg, #40c4ff 0%, #0091ea 100%);
+}
+
+.btn-text {
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* 底部提示 */
+.footer-tip {
+  font-size: 24px;
+  color: #f44336;
+  line-height: 36px;
+  text-align: left;
+  padding: 0 10px;
+}
+</style>
