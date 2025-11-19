@@ -13,7 +13,7 @@
           <!-- 插图装饰 -->
           <image
             class="header-illustration"
-            src="/pkg_main/assets/img1/容器@3x(1).jpg"
+            src="/pkg_main/assets/img1/safety_header_illustration.png"
           ></image>
         </div>
       </list-item>
@@ -400,7 +400,8 @@ export default {
   flex-direction: column;
   padding: 40px;
   background-color: #ffffff;
-  border-radius: 32px 32px 0 0;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
   margin-top: -40px;
 }
 
@@ -577,7 +578,7 @@ export default {
 }
 
 .btn-disabled {
-  background: #e8e8e8;
+  background-color: #e8e8e8;
   box-shadow: none;
 }
 

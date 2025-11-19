@@ -181,15 +181,15 @@ export default {
 /* 顶部标题区域 */
 .page_title_area {
   width: 100%;
-  height: 100px;
+  height: 33px;
   justify-content: center;
   align-items: center;
   /* background-color: #ffffff; Remove background */
-  padding-top: 20px;
+  padding-top: 7px;
 }
 
 .page_title_text {
-  font-size: 36px;
+  font-size: 12px;
   font-weight: bold;
   color: #000000;
 }
@@ -198,16 +198,16 @@ export default {
 .content_container {
   flex: 1;
   width: 100%;
-  padding-bottom: 110px;
+  padding-bottom: 37px;
 }
 
 /* 引言卡片 */
 .intro_card {
-  margin: 20px;
-  padding: 30px;
+  margin: 7px;
+  padding: 10px;
   padding-right: 0; /* Remove right padding for image overlap effect */
   background-color: #e3f2fd; /* Keep light blue or adjust */
-  border-radius: 20px;
+  border-radius: 7px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -216,20 +216,20 @@ export default {
 
 .intro_text_wrapper {
   flex: 1;
-  margin-right: 10px;
+  margin-right: 3px;
 }
 
 .intro_text {
-  font-size: 26px;
+  font-size: 9px;
   color: #1565c0;
-  line-height: 40px;
+  line-height: 13px;
 }
 
 .intro_image {
-  width: 240px; /* Increase size */
-  height: 240px;
+  width: 80px; /* Increase size */
+  height: 80px;
   object-fit: contain;
-  margin-right: -20px; /* Pull image to the right */
+  margin-right: -7px; /* Pull image to the right */
 }
 
 /* 底部图片 */
@@ -237,22 +237,22 @@ export default {
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 13px;
+  margin-bottom: 7px;
 }
 
 .bottom_image {
-  width: 400px;
-  height: 300px;
+  width: 133px;
+  height: 100px;
   object-fit: contain;
 }
 
 /* 选项卡 */
 .tabs_container {
   width: 100%;
-  height: 120px;
-  padding: 20px 0;
-  margin: 10px 0;
+  height: 40px;
+  padding: 7px 0;
+  margin: 3px 0;
 }
 
 .tabs_wrapper {
@@ -262,17 +262,17 @@ export default {
 }
 
 .tab_list_item {
-  margin-right: 20px;
+  margin-right: 7px;
 }
 
 .tab_list_item_first {
-  margin-left: 20px;
+  margin-left: 7px;
 }
 
 .tab_item {
-  padding: 16px 32px;
+  padding: 5px 11px;
   background-color: #ffffff;
-  border-radius: 50px;
+  border-radius: 17px;
   border-width: 1px;
   border-color: #e0e0e0;
   align-items: center;
@@ -285,7 +285,7 @@ export default {
 }
 
 .tab_title {
-  font-size: 28px;
+  font-size: 9px;
   color: #666666;
   lines: 1; /* Prevent text wrapping */
 }
@@ -298,72 +298,72 @@ export default {
 /* 内容区域 */
 .section_content {
   flex-direction: column;
-  padding: 40px;
-  padding-bottom: 150px;
+  padding: 13px;
+  padding-bottom: 50px;
   background-color: #ffffff;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   min-height: 100%;
 }
 
 .section_title {
-  font-size: 40px;
+  font-size: 13px;
   font-weight: bold;
   color: #333333;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .content_paragraph {
-  font-size: 28px;
-  line-height: 48px;
+  font-size: 9px;
+  line-height: 16px;
   color: #555555;
-  margin-bottom: 24px;
-  text-indent: 56px;
+  margin-bottom: 8px;
+  text-indent: 19px;
 }
 
 .content_subtitle {
-  font-size: 32px;
+  font-size: 11px;
   font-weight: bold;
   color: #00bcd4;
-  margin-top: 30px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 7px;
 }
 
 .content_list {
   flex-direction: column;
-  margin: 20px 0;
+  margin: 7px 0;
 }
 
 .list_item {
   flex-direction: row;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
 }
 
 .list_bullet {
-  font-size: 32px;
+  font-size: 11px;
   color: #00bcd4;
-  margin-right: 16px;
+  margin-right: 5px;
 }
 
 .list_text {
-  font-size: 28px;
-  line-height: 44px;
+  font-size: 9px;
+  line-height: 15px;
   color: #555555;
   flex: 1;
 }
 
 .highlight_box {
-  padding: 30px;
+  padding: 10px;
   background-color: #e3f2fd;
-  border-left-width: 8px;
+  border-left-width: 3px;
   border-left-color: #00bcd4;
-  border-radius: 8px;
-  margin: 30px 0;
+  border-radius: 3px;
+  margin: 10px 0;
 }
 
 .highlight_text {
-  font-size: 28px;
-  line-height: 44px;
+  font-size: 9px;
+  line-height: 15px;
   color: #0277bd;
   font-weight: 500;
 }

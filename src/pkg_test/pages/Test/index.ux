@@ -127,7 +127,7 @@
 
       <!-- 下一题按钮 -->
       <div
-        class="next_btn {{selectedAnswer !== null ? 'active' : ''}}"
+        class="next_btn {{selectedAnswer !== null ? 'next_btn_active' : ''}}"
         onclick="nextQuestion"
       >
         <text class="next_btn_text">{{
@@ -406,7 +406,7 @@ export default {
 }
 
 .selected {
-  background-color: #29b6f6 !important;
+  background-color: #29b6f6;
 }
 
 .option_label {
@@ -441,7 +441,7 @@ export default {
 }
 
 .text_selected {
-  color: #ffffff !important;
+  color: #ffffff;
   font-weight: bold;
 }
 
@@ -464,7 +464,7 @@ export default {
   margin-top: 20px;
 }
 
-.next_btn.active {
+.next_btn_active {
   /* 激活状态样式，如果需要区分 */
 }
 

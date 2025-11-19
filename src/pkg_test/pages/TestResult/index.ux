@@ -11,63 +11,64 @@
       <text class="header-title">测评结果</text>
       <div class="header-placeholder"></div>
     </div>
-    #
     <!-- 滚动内容区域 -->
-    <scroll class="scroll-content" scroll-y="true">
-      <div class="content-wrapper">
-        <!-- 结果卡片与人物 Stack -->
-        <stack class="result-stack">
-          <!-- 卡片层 (在下) -->
-          <div class="card-container">
-            <div class="result-card">
-              <!-- 标签 -->
-              <div class="tag-wrapper">
-                <text class="tag-text">测试结果</text>
-              </div>
+    <list class="scroll-content">
+      <list-item type="content">
+        <div class="content-wrapper">
+          <!-- 结果卡片与人物 Stack -->
+          <stack class="result-stack">
+            <!-- 卡片层 (在下) -->
+            <div class="card-container">
+              <div class="result-card">
+                <!-- 标签 -->
+                <div class="tag-wrapper">
+                  <text class="tag-text">测试结果</text>
+                </div>
 
-              <!-- 标题 -->
-              <div class="title-wrapper">
-                <text class="result-title">{{
-                  result.title || '你的心理状态整体优秀'
-                }}</text>
-                <image
-                  class="title-underline"
-                  src="/pkg_main/assets/img1/路径 12@3x.jpg"
-                ></image>
-              </div>
+                <!-- 标题 -->
+                <div class="title-wrapper">
+                  <text class="result-title">{{
+                    result.title || '你的心理状态整体优秀'
+                  }}</text>
+                  <image
+                    class="title-underline"
+                    src="/pkg_main/assets/img1/路径 12@3x.jpg"
+                  ></image>
+                </div>
 
-              <!-- 详细内容 -->
-              <div class="desc-wrapper">
-                <text class="result-desc">{{ result.content }}</text>
+                <!-- 详细内容 -->
+                <div class="desc-wrapper">
+                  <text class="result-desc">{{ result.content }}</text>
+                </div>
               </div>
+            </div>
+
+            <!-- 人物层 (在上) -->
+            <div class="character-container">
+              <image
+                class="character-img"
+                src="/pkg_main/assets/img1/图片@3x(1).png"
+              ></image>
+            </div>
+          </stack>
+
+          <!-- 底部按钮组 -->
+          <div class="button-group">
+            <div class="btn btn-restart" onclick="restart">
+              <text class="btn-text">重新测试</text>
+            </div>
+            <div class="btn btn-home" onclick="goHome">
+              <text class="btn-text">返回首页</text>
             </div>
           </div>
 
-          <!-- 人物层 (在上) -->
-          <div class="character-container">
-            <image
-              class="character-img"
-              src="/pkg_main/assets/img1/图片@3x(1).png"
-            ></image>
-          </div>
-        </stack>
-
-        <!-- 底部按钮组 -->
-        <div class="button-group">
-          <div class="btn btn-restart" onclick="restart">
-            <text class="btn-text">重新测试</text>
-          </div>
-          <div class="btn btn-home" onclick="goHome">
-            <text class="btn-text">返回首页</text>
-          </div>
+          <!-- 底部提示 -->
+          <text class="footer-tip"
+            >注：本测评仅为初步的心理状态评估，不能替代专业的心理诊断。若你感觉心理困扰较为严重，务必及时寻求专业医疗机构的帮助。</text
+          >
         </div>
-
-        <!-- 底部提示 -->
-        <text class="footer-tip"
-          >注：本测评仅为初步的心理状态评估，不能替代专业的心理诊断。若你感觉心理困扰较为严重，务必及时寻求专业医疗机构的帮助。</text
-        >
-      </div>
-    </scroll>
+      </list-item>
+    </list>
   </div>
 </template>
 

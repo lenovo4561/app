@@ -102,7 +102,7 @@ import router from '@system.router'
 import {
   safetyQuestions,
   calculateSafetyResult
-} from '../../helper/safetyTestData'
+} from '../../../helper/safetyTestData'
 
 export default {
   data() {
@@ -398,33 +398,33 @@ export default {
 .scroll-container {
   flex: 1;
   width: 100%;
-  padding-bottom: 180px;
+  padding-bottom: 60px;
 }
 
 .header-decoration {
   width: 100%;
   flex-direction: column;
   background: linear-gradient(180deg, #d6f3ff 0%, #ffffff 100%);
-  padding: 40px;
-  padding-top: 60px;
-  padding-bottom: 80px;
+  padding: 13px;
+  padding-top: 20px;
+  padding-bottom: 27px;
   position: relative;
 }
 
 .header-title {
-  font-size: 44px;
+  font-size: 15px;
   color: #333333;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 13px;
 }
 
 .header-illustration {
   position: absolute;
   right: 0;
-  top: 100px;
-  width: 300px;
-  height: 300px;
+  top: 33px;
+  width: 100px;
+  height: 100px;
   background-image: url('/pkg_main/assets/img1/safety_header_illustration.png');
   background-size: contain;
   background-repeat: no-repeat;
@@ -432,9 +432,9 @@ export default {
 }
 
 .quote-icon {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 20px;
+  width: 17px;
+  height: 17px;
+  margin-bottom: 7px;
   object-fit: contain;
 }
 
@@ -442,41 +442,41 @@ export default {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 7px;
 }
 
 .question-number {
-  font-size: 36px;
+  font-size: 12px;
   color: #29b6f6;
   font-weight: bold;
 }
 
 .question-text {
-  font-size: 40px;
+  font-size: 13px;
   color: #333333;
-  line-height: 60px;
+  line-height: 20px;
   font-weight: 600;
-  max-width: 400px;
+  max-width: 133px;
 }
 
 .options-container {
   flex-direction: column;
   width: 100%;
-  padding: 32px 40px;
+  padding: 11px 13px;
   background-color: #ffffff;
-  border-top-left-radius: 32px;
-  border-top-right-radius: 32px;
-  margin-top: -40px;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+  margin-top: -13px;
 }
 
 .option-item {
   flex-direction: row;
   align-items: center;
   background-color: #e8f4fd;
-  border-radius: 100px;
-  padding: 20px 28px;
-  margin-bottom: 16px;
-  border-width: 3px;
+  border-radius: 33px;
+  padding: 7px 9px;
+  margin-bottom: 5px;
+  border-width: 1px;
   border-color: transparent;
   position: relative;
 }
@@ -497,17 +497,17 @@ export default {
 }
 
 .option-label {
-  width: 68px;
-  height: 68px;
-  border-radius: 34px;
+  width: 23px;
+  height: 23px;
+  border-radius: 11px;
   background-color: #5a98f2;
   align-items: center;
   justify-content: center;
-  margin-right: 24px;
+  margin-right: 8px;
 }
 
 .label-text {
-  font-size: 32px;
+  font-size: 11px;
   color: #ffffff;
   font-weight: bold;
 }
@@ -538,9 +538,9 @@ export default {
 
 .option-text {
   flex: 1;
-  font-size: 30px;
+  font-size: 10px;
   color: #333333;
-  line-height: 44px;
+  line-height: 15px;
 }
 
 .text_selected {
@@ -559,8 +559,8 @@ export default {
 }
 
 .result-icon {
-  font-size: 44px;
-  margin-left: 16px;
+  font-size: 15px;
+  margin-left: 5px;
   font-weight: bold;
   color: #ffffff;
 }
@@ -576,33 +576,33 @@ export default {
 .explanation-container {
   flex-direction: column;
   background-color: #f5f7fa;
-  border-radius: 20px;
-  padding: 40px;
-  margin: 24px 40px 40px 40px;
+  border-radius: 7px;
+  padding: 13px;
+  margin: 8px 13px 13px 13px;
 }
 
 .explanation-title {
-  font-size: 32px;
+  font-size: 11px;
   color: #333333;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 7px;
 }
 
 .explanation-text {
-  font-size: 28px;
+  font-size: 9px;
   color: #666666;
-  line-height: 46px;
+  line-height: 15px;
 }
 
 .footer {
   width: 100%;
-  padding: 24px 40px;
-  padding-bottom: 40px;
+  padding: 8px 13px;
+  padding-bottom: 13px;
   background-color: #ffffff;
   border-top-width: 1px;
   border-top-color: #e8e8e8;
   position: fixed;
-  bottom: 110px;
+  bottom: 37px;
   left: 0;
   right: 0;
   z-index: 2;
@@ -614,12 +614,12 @@ export default {
 
 .btn-submit {
   width: 100%;
-  height: 96px;
+  height: 32px;
   background: linear-gradient(135deg, #5a98f2 0%, #67c3f3 100%);
-  border-radius: 48px;
+  border-radius: 16px;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(90, 152, 242, 0.3);
+  box-shadow: 0 1px 4px rgba(90, 152, 242, 0.3);
 }
 
 .button-group {
@@ -631,15 +631,15 @@ export default {
 .btn-previous,
 .btn-next {
   width: 48%;
-  height: 96px;
-  border-radius: 48px;
+  height: 32px;
+  border-radius: 16px;
   align-items: center;
   justify-content: center;
 }
 
 .btn-previous {
   background: linear-gradient(135deg, #a18aff 0%, #8b7fff 100%);
-  box-shadow: 0 4px 12px rgba(139, 127, 255, 0.3);
+  box-shadow: 0 1px 4px rgba(139, 127, 255, 0.3);
 }
 
 .btn-disabled {
@@ -649,11 +649,11 @@ export default {
 
 .btn-next {
   background: linear-gradient(135deg, #5fc3e4 0%, #3da9fc 100%);
-  box-shadow: 0 4px 12px rgba(61, 169, 252, 0.3);
+  box-shadow: 0 1px 4px rgba(61, 169, 252, 0.3);
 }
 
 .btn-text {
-  font-size: 32px;
+  font-size: 11px;
   color: #ffffff;
   font-weight: 600;
 }
