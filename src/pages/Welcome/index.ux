@@ -1,0 +1,109 @@
+<template>
+  <div class="welcome_page">
+    <!-- 渐变背景 -->
+    <div class="gradient_background">
+      <!-- Logo和标题 -->
+      <div class="content_wrapper">
+        <image class="app_logo" src="/assets/images/logo.png"></image>
+        <text class="app_name">风禾测评</text>
+      </div>
+      
+      <!-- 底部插图 -->
+      <image class="bottom_illustration" src="/assets/img1/容器@3x(3).jpg"></image>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+
+export default {
+  data() {
+    return {
+      timer: null
+    }
+  },
+
+  onInit() {
+    console.log('欢迎页初始化')
+  },
+
+  onShow() {
+    console.log('欢迎页显示')
+    // 延迟2秒后跳转到首页
+    this.timer = setTimeout(() => {
+      this.navigateToHome()
+    }, 2000)
+  },
+
+  onHide() {
+    // 清除定时器
+    if (this.timer) {
+      clearTimeout(this.timer)
+      this.timer = null
+    }
+  },
+
+  onDestroy() {
+    // 清除定时器
+    if (this.timer) {
+      clearTimeout(this.timer)
+      this.timer = null
+    }
+  },
+
+  navigateToHome() {
+    router.replace({
+      uri: '/pages/Home'
+    })
+  }
+}
+</script>
+
+<style>
+.welcome_page {
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.gradient_background {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #E3F2FD 0%, #E1F5FE 50%, #B3E5FC 100%);
+}
+
+.content_wrapper {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.app_logo {
+  width: 280px;
+  height: 280px;
+  border-radius: 70px;
+  margin-bottom: 60px;
+  box-shadow: 0 12px 32px rgba(0, 188, 212, 0.3);
+}
+
+.app_name {
+  font-size: 64px;
+  color: #00838F;
+  font-weight: bold;
+  letter-spacing: 8px;
+  text-shadow: 0 2px 8px rgba(0, 131, 143, 0.2);
+}
+
+.bottom_illustration {
+  width: 100%;
+  height: 400px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+</style>

@@ -1,0 +1,566 @@
+<template>
+  <div class="container">
+    <!-- 可滚动内容区域 -->
+    <list class="scroll-container">
+      <list-item type="header">
+        <!-- 头部装饰区域 -->
+        <div class="header-decoration">
+          <text class="header-title">手机安全知识</text>
+          <div class="question-header">
+            <text class="question-number">第{{currentIndex + 1}}题</text>
+          </div>
+          <text class="question-text">{{currentQuestion.question}}</text>
+          <!-- 插图装饰 -->
+          <image class="header-illustration" src="/assets/img1/容器@3x(1).jpg"></image>
+        </div>
+      </list-item>
+
+      <list-item type="options">
+        <!-- 选项列表 -->
+        <div class="options-container">
+          <block for="{{(index, item) in currentQuestion.options}}">
+            <div 
+              class="option-item {{getOptionClass(item.label)}}" 
+              onclick="selectOption" 
+              data-label="{{item.label}}">
+              <div class="option-label {{getOptionLabelClass(item.label)}}">
+                <text class="label-text">{{item.label}}</text>
+              </div>
+              <text class="option-text {{getOptionTextClass(item.label)}}">{{item.text}}</text>
+              <!-- 显示正确/错误标记 -->
+              <text if="{{showResult && item.label === selectedAnswer}}" class="result-icon {{isCorrect ? 'correct-icon' : 'wrong-icon'}}">
+                {{isCorrect ? '✓' : '✕'}}
+              </text>
+              <text if="{{showResult && !isCorrect && item.label === currentQuestion.correctAnswer}}" class="result-icon correct-icon">✓</text>
+            </div>
+          </block>
+        </div>
+      </list-item>
+
+      <list-item type="explanation" if="{{showResult}}">
+        <!-- 解析区域 -->
+        <div class="explanation-container">
+          <text class="explanation-title">解析：</text>
+          <text class="explanation-text">{{currentQuestion.explanation}}</text>
+        </div>
+      </list-item>
+    </list>
+
+    <!-- 底部按钮 -->
+    <div class="footer">
+      <div if="{{!showResult}}" class="single-button">
+        <div class="btn-submit" onclick="submitAnswer">
+          <text class="btn-text">提交答案</text>
+        </div>
+      </div>
+      
+      <div if="{{showResult}}" class="button-group">
+        <div class="btn-previous {{currentIndex === 0 ? 'btn-disabled' : ''}}" onclick="previousQuestion">
+          <text class="btn-text">上一题</text>
+        </div>
+        <div class="btn-next" onclick="nextQuestion">
+          <text class="btn-text">{{isLastQuestion ? '查看结果' : '下一题'}}</text>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import { safetyQuestions, calculateSafetyResult } from '../../helper/safetyTestData'
+
+export default {
+  data() {
+    return {
+      currentIndex: 0,
+      totalQuestions: 50,
+      questions: safetyQuestions || [],
+      currentQuestion: {
+        id: 1,
+        question: '加载中...',
+        options: [
+          { label: 'A', text: '选项A' },
+          { label: 'B', text: '选项B' },
+          { label: 'C', text: '选项C' },
+          { label: 'D', text: '选项D' }
+        ],
+        correctAnswer: 'A',
+        explanation: ''
+      },
+      selectedAnswer: '',
+      showResult: false,
+      isCorrect: false,
+      correctCount: 0,
+      answeredQuestions: {}
+    }
+  },
+
+  onInit() {
+    console.log('>>> SafetyTest 页面初始化')
+    console.log('>>> safetyQuestions length:', safetyQuestions.length)
+    this.loadQuestions()
+  },
+
+  onReady() {
+    console.log('>>> SafetyTest onReady')
+  },
+
+  onShow() {
+    console.log('>>> SafetyTest 页面显示')
+    console.log('>>> currentIndex:', this.currentIndex)
+    console.log('>>> totalQuestions:', this.totalQuestions)
+    console.log('>>> selectedAnswer:', this.selectedAnswer)
+    console.log('>>> showResult:', this.showResult)
+    console.log('>>> currentQuestion:', JSON.stringify(this.currentQuestion))
+    console.log('>>> questions length:', this.questions.length)
+  },
+
+  loadQuestions() {
+    console.log('开始加载题目')
+    
+    if (safetyQuestions && safetyQuestions.length > 0) {
+      this.questions = safetyQuestions
+      this.totalQuestions = safetyQuestions.length
+      
+      const firstQuestion = safetyQuestions[0]
+      console.log('第一题:', firstQuestion.question)
+      
+      this.currentQuestion = firstQuestion
+      
+      console.log('加载完成')
+    } else {
+      console.error('没有题目数据')
+    }
+  },
+
+  selectOption(e) {
+    const label = e.target.attr.dataLabel
+    console.log('选择选项:', label)
+    if (this.showResult) {
+      console.log('已显示结果，不能再选择')
+      return // 已显示结果时不能再选择
+    }
+    
+    this.selectedAnswer = label
+    console.log('当前选择:', this.selectedAnswer)
+  },
+
+  submitAnswer() {
+    if (!this.selectedAnswer) {
+      console.log('请选择一个答案')
+      return
+    }
+
+    // 判断答案是否正确
+    this.isCorrect = this.selectedAnswer === this.currentQuestion.correctAnswer
+    this.showResult = true
+
+    // 记录答题情况
+    this.answeredQuestions[this.currentQuestion.id] = {
+      answer: this.selectedAnswer,
+      isCorrect: this.isCorrect,
+      showResult: true
+    }
+
+    // 统计正确数量
+    if (this.isCorrect) {
+      this.correctCount++
+    }
+  },
+
+  previousQuestion() {
+    if (this.currentIndex === 0) return
+
+    this.currentIndex--
+    this.currentQuestion = this.questions[this.currentIndex]
+    
+    // 恢复该题的答题状态
+    const answered = this.answeredQuestions[this.currentQuestion.id]
+    if (answered) {
+      this.selectedAnswer = answered.answer
+      this.showResult = answered.showResult
+      this.isCorrect = answered.isCorrect
+    } else {
+      this.selectedAnswer = ''
+      this.showResult = false
+      this.isCorrect = false
+    }
+  },
+
+  nextQuestion() {
+    // 如果是最后一题，跳转到结果页
+    if (this.isLastQuestion) {
+      this.showTestResult()
+      return
+    }
+
+    this.currentIndex++
+    this.currentQuestion = this.questions[this.currentIndex]
+    
+    // 恢复该题的答题状态
+    const answered = this.answeredQuestions[this.currentQuestion.id]
+    if (answered) {
+      this.selectedAnswer = answered.answer
+      this.showResult = answered.showResult
+      this.isCorrect = answered.isCorrect
+    } else {
+      this.selectedAnswer = ''
+      this.showResult = false
+      this.isCorrect = false
+    }
+  },
+
+  showTestResult() {
+    const result = calculateSafetyResult(this.correctCount)
+    router.replace({
+      uri: '/pages/SafetyResult',
+      params: {
+        score: result.score,
+        correctCount: result.correctCount,
+        totalQuestions: result.totalQuestions,
+        percentage: result.percentage,
+        level: result.level,
+        title: result.title,
+        content: result.content
+      }
+    })
+  },
+
+  getOptionClass(label) {
+    if (!this.showResult) {
+      return this.selectedAnswer === label ? 'option-selected' : ''
+    }
+    
+    // 答错时：选中的错误答案显示红色，正确答案显示绿色
+    if (!this.isCorrect) {
+      if (label === this.selectedAnswer) {
+        return 'option-wrong'
+      }
+      if (label === this.currentQuestion.correctAnswer) {
+        return 'option-correct'
+      }
+    } else {
+      // 答对时：选中的答案保持蓝色（与选中状态一致）
+      if (label === this.selectedAnswer) {
+        return 'option-selected'
+      }
+    }
+    
+    return ''
+  },
+
+  getOptionLabelClass(label) {
+    if (!this.showResult) {
+      return this.selectedAnswer === label ? 'label_selected' : ''
+    }
+    
+    if (!this.isCorrect) {
+      if (label === this.selectedAnswer) {
+        return 'label_wrong'
+      }
+      if (label === this.currentQuestion.correctAnswer) {
+        return 'label_correct'
+      }
+    } else {
+      if (label === this.selectedAnswer) {
+        return 'label_selected'
+      }
+    }
+    
+    return ''
+  },
+
+  getOptionTextClass(label) {
+    if (!this.showResult) {
+      return this.selectedAnswer === label ? 'text_selected' : ''
+    }
+    
+    if (!this.isCorrect) {
+      if (label === this.selectedAnswer) {
+        return 'text_wrong'
+      }
+      if (label === this.currentQuestion.correctAnswer) {
+        return 'text_correct'
+      }
+    } else {
+      if (label === this.selectedAnswer) {
+        return 'text_selected'
+      }
+    }
+    
+    return ''
+  },
+
+  computed: {
+    isLastQuestion() {
+      return this.currentIndex === this.totalQuestions - 1
+    }
+  }
+}
+</script>
+
+<style>
+.container {
+  flex-direction: column;
+  background-color: #f5f5f5;
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-container {
+  flex: 1;
+  width: 100%;
+}
+
+.header-decoration {
+  width: 100%;
+  flex-direction: column;
+  background: linear-gradient(180deg, #67C3F3 0%, #5A98F2 100%);
+  padding: 40px;
+  padding-top: 60px;
+  padding-bottom: 80px;
+  position: relative;
+}
+
+.header-title {
+  font-size: 44px;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header-illustration {
+  position: absolute;
+  right: 40px;
+  top: 160px;
+  width: 280px;
+  height: 280px;
+  border-radius: 20px;
+}
+
+.question-header {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.question-number {
+  font-size: 32px;
+  color: #5A98F2;
+  font-weight: bold;
+  background-color: #ffffff;
+  padding: 12px 32px;
+  border-radius: 24px;
+}
+
+.question-text {
+  font-size: 40px;
+  color: #333333;
+  line-height: 60px;
+  font-weight: 600;
+  max-width: 700px;
+}
+
+.options-container {
+  flex-direction: column;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 32px 32px 0 0;
+  margin-top: -40px;
+}
+
+.option-item {
+  flex-direction: row;
+  align-items: center;
+  background-color: #E8F4FD;
+  border-radius: 100px;
+  padding: 24px 32px;
+  margin-bottom: 20px;
+  border-width: 3px;
+  border-color: transparent;
+  position: relative;
+}
+
+.option-selected {
+  background-color: #5A98F2;
+  border-color: #5A98F2;
+}
+
+.option-wrong {
+  background-color: #FF4444;
+  border-color: #FF4444;
+}
+
+.option-correct {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.option-label {
+  width: 68px;
+  height: 68px;
+  border-radius: 34px;
+  background-color: #5A98F2;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24px;
+}
+
+.label-text {
+  font-size: 32px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.label_selected {
+  background-color: #ffffff;
+}
+
+.label_selected .label-text {
+  color: #5A98F2;
+}
+
+.label_wrong {
+  background-color: #ffffff;
+}
+
+.label_wrong .label-text {
+  color: #FF4444;
+}
+
+.label_correct {
+  background-color: #ffffff;
+}
+
+.label_correct .label-text {
+  color: #4CAF50;
+}
+
+.option-text {
+  flex: 1;
+  font-size: 30px;
+  color: #333333;
+  line-height: 44px;
+}
+
+.text_selected {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.text_wrong {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.text_correct {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.result-icon {
+  font-size: 44px;
+  margin-left: 16px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.wrong-icon {
+  color: #ffffff;
+}
+
+.correct-icon {
+  color: #ffffff;
+}
+
+.explanation-container {
+  flex-direction: column;
+  background-color: #F5F7FA;
+  border-radius: 20px;
+  padding: 40px;
+  margin: 0 40px 40px 40px;
+}
+
+.explanation-title {
+  font-size: 32px;
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.explanation-text {
+  font-size: 28px;
+  color: #666666;
+  line-height: 46px;
+}
+
+.footer {
+  width: 100%;
+  padding: 24px 40px;
+  padding-bottom: 40px;
+  background-color: #ffffff;
+  border-top-width: 1px;
+  border-top-color: #e8e8e8;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.single-button {
+  width: 100%;
+}
+
+.btn-submit {
+  width: 100%;
+  height: 96px;
+  background: linear-gradient(135deg, #5A98F2 0%, #67C3F3 100%);
+  border-radius: 48px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(90, 152, 242, 0.3);
+}
+
+.button-group {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-previous,
+.btn-next {
+  width: 48%;
+  height: 96px;
+  border-radius: 48px;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-previous {
+  background: linear-gradient(135deg, #B8DBFF 0%, #A0CFFF 100%);
+  box-shadow: 0 4px 12px rgba(160, 207, 255, 0.3);
+}
+
+.btn-disabled {
+  background: #E8E8E8;
+  box-shadow: none;
+}
+
+.btn-next {
+  background: linear-gradient(135deg, #5FD8F3 0%, #67C3F3 100%);
+  box-shadow: 0 4px 12px rgba(103, 195, 243, 0.3);
+}
+
+.btn-text {
+  font-size: 32px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn-disabled .btn-text {
+  color: #999999;
+}
+</style>
