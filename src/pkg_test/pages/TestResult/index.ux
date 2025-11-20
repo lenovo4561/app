@@ -32,7 +32,7 @@
                   }}</text>
                   <image
                     class="title-underline"
-                    src="/pkg_main/assets/img1/路径 12@3x.jpg"
+                    src="/pkg_main/assets/img1/path_12.jpg"
                   ></image>
                 </div>
 
@@ -47,7 +47,7 @@
             <div class="character-container">
               <image
                 class="character-img"
-                src="/pkg_main/assets/img1/图片@3x(1).png"
+                src="/pkg_main/assets/img1/image_1.png"
               ></image>
             </div>
           </stack>

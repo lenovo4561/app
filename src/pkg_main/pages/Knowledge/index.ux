@@ -15,7 +15,7 @@
           </div>
           <image
             class="intro_image"
-            src="/pkg_main/assets/img1/图片@3x.png"
+            src="/pkg_main/assets/img1/image.png"
           ></image>
         </div>
       </list-item>
@@ -83,7 +83,7 @@
           <div class="bottom_image_container">
             <image
               class="bottom_image"
-              src="/pkg_main/assets/img1/组 448@3x.png"
+              src="/pkg_main/assets/img1/group_448.png"
             ></image>
           </div>
         </div>

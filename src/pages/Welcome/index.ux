@@ -4,14 +4,14 @@
     <div class="gradient_background">
       <!-- Logo和标题 -->
       <div class="content_wrapper">
-        <image class="app_logo" src="/assets/img1/组 345@3x.jpg"></image>
+        <image class="app_logo" src="/assets/img1/group_345.jpg"></image>
         <text class="app_name">风禾测评</text>
       </div>
 
       <!-- 底部插图 -->
       <image
         class="bottom_illustration"
-        src="/assets/img1/矩形 46@3x.jpg"
+        src="/assets/img1/rectangle_46.jpg"
       ></image>
     </div>
 
@@ -121,7 +121,8 @@ export default {
     router.push({
       uri: '/pkg_other/pages/Webview',
       params: {
-        url: 'https://api.51dsp.cn/index/agreement.do?pn=com.zjfenghecp.windseed',
+        url:
+          'https://api.51dsp.cn/index/agreement.do?pn=com.zjfenghecp.windseed',
         title: '用户协议'
       }
     })

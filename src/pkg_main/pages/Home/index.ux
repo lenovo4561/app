@@ -42,7 +42,9 @@
 
             <!-- 精选测评列表 -->
             <block for="(index, item) in testList">
-              <list-item type="{{index === 0 ? 'test-item-first' : 'test-item'}}">
+              <list-item
+                type="{{index === 0 ? 'test-item-first' : 'test-item'}}"
+              >
                 <div
                   class="test_item"
                   style="padding-bottom: {{index === testList.length - 1 ? '43px' : '7px'}}"
@@ -119,7 +121,7 @@ export default {
       testList: [
         {
           id: 'emotion_1',
-          image: '/pkg_main/assets/img/1.你的情感共情力有多强？.jpg',
+          image: '/pkg_main/assets/img/question_1.jpg',
           badge: '情感',
           badgeColor: '#E91E63',
           title: '你的情感共情力有多强？',
@@ -127,7 +129,7 @@ export default {
         },
         {
           id: 'career_1',
-          image: '/pkg_main/assets/img/9.你在工作中的抗压能力如何？.jpg',
+          image: '/pkg_main/assets/img/question_9.jpg',
           badge: '事业',
           badgeColor: '#2196F3',
           title: '你在工作中的抗压能力如何？',
@@ -135,7 +137,7 @@ export default {
         },
         {
           id: 'family_1',
-          image: '/pkg_main/assets/img/13.你在家庭中的沟通协调能力如何？.jpg',
+          image: '/pkg_main/assets/img/question_13.jpg',
           badge: '家庭',
           badgeColor: '#9C27B0',
           title: '你在家庭中的沟通协调能力如何？',
@@ -143,7 +145,7 @@ export default {
         },
         {
           id: 'interest_1',
-          image: '/pkg_main/assets/img/17.你的生活趣味偏好是哪类？.jpg',
+          image: '/pkg_main/assets/img/question_17.jpg',
           badge: '趣味',
           badgeColor: '#FF9800',
           title: '你的生活趣味偏好是哪类？',
@@ -151,7 +153,7 @@ export default {
         },
         {
           id: 'personality_1',
-          image: '/pkg_main/assets/img/5.你是典型的外向者还是内向者？.jpg',
+          image: '/pkg_main/assets/img/question_5.jpg',
           badge: '性格',
           badgeColor: '#FF5722',
           title: '你是典型的外向者还是内向者？',
@@ -159,7 +161,7 @@ export default {
         },
         {
           id: 'emotion_2',
-          image: '/pkg_main/assets/img/2.你在亲密关系中的安全感源自哪里？.jpg',
+          image: '/pkg_main/assets/img/question_2.jpg',
           badge: '情感',
           badgeColor: '#E91E63',
           title: '你在亲密关系中的安全感源自哪里？',
@@ -167,7 +169,7 @@ export default {
         },
         {
           id: 'emotion_3',
-          image: '/pkg_main/assets/img/3.你处理情感冲突的能力等级？.jpg',
+          image: '/pkg_main/assets/img/question_3.jpg',
           badge: '情感',
           badgeColor: '#E91E63',
           title: '你处理情感冲突的能力等级？',
@@ -175,7 +177,7 @@ export default {
         },
         {
           id: 'emotion_4',
-          image: '/pkg_main/assets/img/4.你对情感的表达倾向是怎样的？.jpg',
+          image: '/pkg_main/assets/img/question_4.jpg',
           badge: '情感',
           badgeColor: '#E91E63',
           title: '你对情感的表达倾向是怎样的？',
@@ -183,7 +185,7 @@ export default {
         },
         {
           id: 'personality_2',
-          image: '/pkg_main/assets/img/6.你的做事风格是果断型还是谨慎型？.jpg',
+          image: '/pkg_main/assets/img/question_6.jpg',
           badge: '性格',
           badgeColor: '#FF5722',
           title: '你的做事风格是果断型还是谨慎型？',
@@ -191,7 +193,7 @@ export default {
         },
         {
           id: 'personality_3',
-          image: '/pkg_main/assets/img/7.你是乐观主义者还是悲观主义者？.jpg',
+          image: '/pkg_main/assets/img/question_7.jpg',
           badge: '性格',
           badgeColor: '#FF5722',
           title: '你是乐观主义者还是悲观主义者？',
@@ -199,7 +201,7 @@ export default {
         },
         {
           id: 'personality_4',
-          image: '/pkg_main/assets/img/8.你是否具有较强的责任心？.jpg',
+          image: '/pkg_main/assets/img/question_8.jpg',
           badge: '性格',
           badgeColor: '#FF5722',
           title: '你是否具有较强的责任心？',
@@ -207,7 +209,7 @@ export default {
         },
         {
           id: 'career_2',
-          image: '/pkg_main/assets/img/10.你是否具备领导潜质？.jpg',
+          image: '/pkg_main/assets/img/question_10.jpg',
           badge: '事业',
           badgeColor: '#2196F3',
           title: '你是否具备领导潜质？',
@@ -215,7 +217,7 @@ export default {
         },
         {
           id: 'career_3',
-          image: '/pkg_main/assets/img/11.你对职业发展的规划清晰度如何？.jpg',
+          image: '/pkg_main/assets/img/question_11.jpg',
           badge: '事业',
           badgeColor: '#2196F3',
           title: '你对职业发展的规划清晰度如何？',
@@ -223,7 +225,7 @@ export default {
         },
         {
           id: 'career_4',
-          image: '/pkg_main/assets/img/12.你在工作中的创新能力怎么样？.jpg',
+          image: '/pkg_main/assets/img/question_12.jpg',
           badge: '事业',
           badgeColor: '#2196F3',
           title: '你在工作中的创新能力怎么样？',
@@ -231,7 +233,7 @@ export default {
         },
         {
           id: 'family_2',
-          image: '/pkg_main/assets/img/14.你对家庭责任的承担程度如何？.jpg',
+          image: '/pkg_main/assets/img/question_14.jpg',
           badge: '家庭',
           badgeColor: '#9C27B0',
           title: '你对家庭责任的承担程度如何？',
@@ -239,7 +241,7 @@ export default {
         },
         {
           id: 'family_3',
-          image: '/pkg_main/assets/img/15.你营造家庭幸福感的能力如何？.jpg',
+          image: '/pkg_main/assets/img/question_15.jpg',
           badge: '家庭',
           badgeColor: '#9C27B0',
           title: '你营造家庭幸福感的能力如何？',
@@ -247,7 +249,7 @@ export default {
         },
         {
           id: 'family_4',
-          image: '/pkg_main/assets/img/16.你处理家庭边界感的能力如何？.jpg',
+          image: '/pkg_main/assets/img/question_16.jpg',
           badge: '家庭',
           badgeColor: '#9C27B0',
           title: '你处理家庭边界感的能力如何？',
@@ -255,7 +257,7 @@ export default {
         },
         {
           id: 'interest_2',
-          image: '/pkg_main/assets/img/18.你的吃货属性有多强？.jpg',
+          image: '/pkg_main/assets/img/question_18.jpg',
           badge: '趣味',
           badgeColor: '#FF9800',
           title: '你的吃货属性有多强？',
@@ -263,7 +265,7 @@ export default {
         },
         {
           id: 'interest_3',
-          image: '/pkg_main/assets/img/19.你的旅行风格是什么样的？.jpg',
+          image: '/pkg_main/assets/img/question_19.jpg',
           badge: '趣味',
           badgeColor: '#FF9800',
           title: '你的旅行风格是什么样的？',
@@ -271,7 +273,7 @@ export default {
         },
         {
           id: 'interest_4',
-          image: '/pkg_main/assets/img/20.你的宠物偏好暴露了什么？.jpg',
+          image: '/pkg_main/assets/img/question_20.jpg',
           badge: '趣味',
           badgeColor: '#FF9800',
           title: '你的宠物偏好暴露了什么？',
@@ -306,16 +308,19 @@ export default {
     // 精选测评项点击
     // 兼容处理：优先使用 currentTarget 获取绑定事件元素上的属性
     // 快应用中 data-index 属性通常在 attr.dataIndex 中
-    const attr = (evt.currentTarget && evt.currentTarget.attr) || (evt.target && evt.target.attr) || {};
-    const index = attr.dataIndex !== undefined ? attr.dataIndex : attr.dataindex;
-    
-    console.log('点击测评项, index:', index);
+    const attr =
+      (evt.currentTarget && evt.currentTarget.attr) ||
+      (evt.target && evt.target.attr) ||
+      {}
+    const index = attr.dataIndex !== undefined ? attr.dataIndex : attr.dataindex
+
+    console.log('点击测评项, index:', index)
 
     if (index === undefined || index === null) {
-      console.error('无法获取测评索引, evt:', JSON.stringify(evt));
-      return;
+      console.error('无法获取测评索引, evt:', JSON.stringify(evt))
+      return
     }
-    
+
     const test = this.testList[parseInt(index)]
 
     if (!test) {
@@ -326,7 +331,7 @@ export default {
     console.log('点击测评:', test.title)
     console.log('维度ID:', test.dimensionId)
     console.log('测试ID:', test.id)
-  
+
     // 跳转到测评页面，传递维度和测试信息
     router.push({
       uri: '/pkg_test/pages/Test',

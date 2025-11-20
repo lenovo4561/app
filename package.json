@@ -6,7 +6,7 @@
     "start": "hap server --watch",
     "server": "hap server",
     "build": "hap build && node ./scripts/rename_package.js",
-    "release": "hap release && node ./scripts/rename_package.js",
+    "release": "hap release",
     "watch": "hap watch",
     "debug": "hap debug",
     "gen": "node ./scripts/gen/index.js",
