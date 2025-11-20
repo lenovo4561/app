@@ -191,15 +191,20 @@ export default {
   },
 
   selectOption(e) {
-    const label = e.target.attr.dataLabel
+    // 兼容处理：优先使用 currentTarget 获取绑定事件元素上的属性
+    const attr = (e.currentTarget && e.currentTarget.attr) || (e.target && e.target.attr) || {};
+    const label = attr.dataLabel || attr.datalabel;
+
     console.log('选择选项:', label)
     if (this.showResult) {
       console.log('已显示结果，不能再选择')
       return
     }
 
-    this.selectedAnswer = label
-    console.log('当前选择:', this.selectedAnswer)
+    if (label) {
+      this.selectedAnswer = label
+      console.log('当前选择:', this.selectedAnswer)
+    }
   },
 
   submitAnswer() {

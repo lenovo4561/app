@@ -4,8 +4,7 @@
       src="{{url}}"
       id="web"
       class="web-content"
-      trustedurl="{{url}}"
-      useragent="Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36"
+      allowthirdpartycookies="true"
       onpagefinish="onPageFinish"
       onpagestart="onPageStart"
       onerror="onError"
@@ -15,11 +14,14 @@
 </template>
 
 <script>
+import router from '@system.router'
+
 export default {
   data() {
     return {
       title: '',
-      url: ''
+      url: '',
+      isBacking: false
     }
   },
 
@@ -30,8 +32,44 @@ export default {
 
     // 设置标题栏
     if (this.title) {
-      this.$page.setTitleBar({ text: this.title })
+      try {
+        this.$page.setTitleBar({ text: this.title })
+      } catch (e) {
+        console.error('setTitleBar error:', e)
+      }
     }
+  },
+
+  onBackPress() {
+    console.log('onBackPress triggered')
+    if (this.isBacking) {
+      return true
+    }
+    this.isBacking = true
+
+    const webElement = this.$element('web')
+    if (webElement) {
+      webElement.canBack({
+        callback: (canBack) => {
+          console.log('canBack result:', canBack)
+          if (canBack) {
+            webElement.back()
+            // 延迟重置标志位
+            setTimeout(() => {
+              this.isBacking = false
+            }, 300)
+          } else {
+            console.log('Executing router.back()')
+            router.back()
+            // 页面即将销毁，不需要重置 isBacking
+          }
+        }
+      })
+      return true
+    }
+    
+    this.isBacking = false
+    return false
   },
 
   onPageStart() {
@@ -42,9 +80,20 @@ export default {
     console.log('页面加载完成')
     // 注入 viewport meta 标签，确保移动端适配
     const webElement = this.$element('web')
-    if (webElement) {
-      webElement.executeScript({
-        script: `
+    if (webElement && webElement.executeScript) {
+      try {
+        webElement.executeScript({
+          script: `
+          // Polyfill for process if missing
+          if (typeof process === 'undefined') {
+            window.process = {
+              env: {},
+              listenerCount: function() { return 0; },
+              on: function() {},
+              emit: function() {}
+            };
+          }
+          
           var meta = document.createElement('meta');
           meta.name = 'viewport';
           meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
@@ -52,9 +101,13 @@ export default {
             document.head.appendChild(meta);
           }
         `
-      })
+        })
+      } catch (e) {
+        console.error('executeScript error:', e)
+      }
     }
   },
+
 
   onDestroy() {
     console.log('Webview页面销毁')
@@ -75,6 +128,6 @@ export default {
 
 .web-content {
   width: 100%;
-  height: 100%;
+  flex: 1;
 }
 </style>
