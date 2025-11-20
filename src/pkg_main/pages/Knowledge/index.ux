@@ -34,7 +34,10 @@
                   onclick="switchTab"
                   data-index="{{index}}"
                 >
-                  <text class="tab_title">{{ tab.title }}</text>
+                  <text
+                    class="tab_title {{currentTabIndex === index ? 'tab_title_active' : ''}}"
+                    >{{ tab.title }}</text
+                  >
                 </div>
               </list-item>
             </block>
@@ -173,7 +176,7 @@ export default {
 <style lang="less">
 .knowledge_page {
   flex-direction: column;
-  background-image: url(/pkg_main/assets/img1/1@3x.jpg);
+  background-image: url(/pkg_main/assets/img1/test_bg.jpg);
   background-size: cover;
   background-position: center;
 }
@@ -181,11 +184,11 @@ export default {
 /* 顶部标题区域 */
 .page_title_area {
   width: 100%;
-  height: 33px;
+  height: 30px;
   justify-content: center;
   align-items: center;
-  /* background-color: #ffffff; Remove background */
-  padding-top: 7px;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
 
 .page_title_text {
@@ -198,38 +201,38 @@ export default {
 .content_container {
   flex: 1;
   width: 100%;
-  padding-bottom: 37px;
+  padding-bottom: 40px;
 }
 
 /* 引言卡片 */
 .intro_card {
-  margin: 7px;
+  margin: 10px;
   padding: 10px;
-  padding-right: 0; /* Remove right padding for image overlap effect */
-  background-color: #e3f2fd; /* Keep light blue or adjust */
-  border-radius: 7px;
+  padding-right: 0;
+  background-color: #e3f2fd;
+  border-radius: 8px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  overflow: hidden; /* Ensure content stays inside */
+  overflow: hidden;
 }
 
 .intro_text_wrapper {
   flex: 1;
-  margin-right: 3px;
+  margin-right: 5px;
 }
 
 .intro_text {
   font-size: 9px;
   color: #1565c0;
-  line-height: 13px;
+  line-height: 14px;
 }
 
 .intro_image {
-  width: 80px; /* Increase size */
+  width: 80px;
   height: 80px;
   object-fit: contain;
-  margin-right: -7px; /* Pull image to the right */
+  margin-right: -10px;
 }
 
 /* 底部图片 */
@@ -237,22 +240,22 @@ export default {
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin-top: 13px;
-  margin-bottom: 7px;
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 .bottom_image {
-  width: 133px;
-  height: 100px;
+  width: 120px;
+  height: 90px;
   object-fit: contain;
 }
 
 /* 选项卡 */
 .tabs_container {
   width: 100%;
-  height: 40px;
-  padding: 7px 0;
-  margin: 3px 0;
+  height: 35px;
+  padding: 5px 0;
+  margin: 5px 0;
 }
 
 .tabs_wrapper {
@@ -262,21 +265,22 @@ export default {
 }
 
 .tab_list_item {
-  margin-right: 7px;
+  margin-right: 8px;
 }
 
 .tab_list_item_first {
-  margin-left: 7px;
+  margin-left: 10px;
 }
 
 .tab_item {
-  padding: 5px 11px;
+  padding: 5px 12px;
   background-color: #ffffff;
-  border-radius: 17px;
+  border-radius: 15px;
   border-width: 1px;
   border-color: #e0e0e0;
   align-items: center;
   justify-content: center;
+  height: 24px;
 }
 
 .tab_active {
@@ -287,10 +291,10 @@ export default {
 .tab_title {
   font-size: 9px;
   color: #666666;
-  lines: 1; /* Prevent text wrapping */
+  lines: 1;
 }
 
-.tab_active .tab_title {
+.tab_title_active {
   color: #ffffff;
   font-weight: bold;
 }
@@ -298,7 +302,7 @@ export default {
 /* 内容区域 */
 .section_content {
   flex-direction: column;
-  padding: 13px;
+  padding: 15px;
   padding-bottom: 50px;
   background-color: #ffffff;
   border-top-left-radius: 10px;
@@ -307,7 +311,7 @@ export default {
 }
 
 .section_title {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: bold;
   color: #333333;
   margin-bottom: 10px;
@@ -315,23 +319,23 @@ export default {
 
 .content_paragraph {
   font-size: 9px;
-  line-height: 16px;
+  line-height: 15px;
   color: #555555;
   margin-bottom: 8px;
-  text-indent: 19px;
+  text-indent: 18px;
 }
 
 .content_subtitle {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: bold;
   color: #00bcd4;
   margin-top: 10px;
-  margin-bottom: 7px;
+  margin-bottom: 6px;
 }
 
 .content_list {
   flex-direction: column;
-  margin: 7px 0;
+  margin: 8px 0;
 }
 
 .list_item {
@@ -340,14 +344,14 @@ export default {
 }
 
 .list_bullet {
-  font-size: 11px;
+  font-size: 10px;
   color: #00bcd4;
   margin-right: 5px;
 }
 
 .list_text {
   font-size: 9px;
-  line-height: 15px;
+  line-height: 14px;
   color: #555555;
   flex: 1;
 }
@@ -357,13 +361,13 @@ export default {
   background-color: #e3f2fd;
   border-left-width: 3px;
   border-left-color: #00bcd4;
-  border-radius: 3px;
+  border-radius: 4px;
   margin: 10px 0;
 }
 
 .highlight_text {
   font-size: 9px;
-  line-height: 15px;
+  line-height: 14px;
   color: #0277bd;
   font-weight: 500;
 }

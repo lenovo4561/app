@@ -4,10 +4,10 @@
     "list": [
       {
         "name": "卡片名称4x2",
-        "pathName": "widgets/CardDemo",
+        "pathName": "pkg_other/widgets/CardDemo",
         "query": "",
         "isCard": true,
-        "id": 0
+        "id": 1
       }
     ]
   }

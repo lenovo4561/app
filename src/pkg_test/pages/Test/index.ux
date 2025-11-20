@@ -313,32 +313,32 @@ export default {
 /* 顶部导航 */
 .header {
   width: 100%;
-  height: 100px;
+  height: 33.33px;
   flex-direction: row;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 10px;
 }
 
 .back_btn {
-  width: 48px;
-  height: 48px;
-  margin-right: 20px;
+  width: 16px;
+  height: 16px;
+  margin-right: 6.67px;
   object-fit: contain;
 }
 
 .header_title {
-  font-size: 36px;
+  font-size: 12px;
   color: #333333;
   font-weight: bold;
   flex: 1;
   text-align: center;
-  margin-right: 68px; /* 平衡返回按钮宽度，使标题居中 */
+  margin-right: 22.67px; /* 平衡返回按钮宽度，使标题居中 */
 }
 
 /* 进度条 */
 .progress_container {
   width: 92%;
-  padding: 20px 0;
+  padding: 6.67px 0;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -346,20 +346,20 @@ export default {
 
 .progress_bar {
   flex: 1;
-  height: 16px;
+  height: 5.33px;
   background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 8px;
-  margin-right: 20px;
+  border-radius: 2.67px;
+  margin-right: 6.67px;
 }
 
 .progress_fill {
-  height: 16px;
+  height: 5.33px;
   background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-  border-radius: 8px;
+  border-radius: 2.67px;
 }
 
 .progress_text {
-  font-size: 28px;
+  font-size: 9.33px;
   color: #333333;
   font-weight: 500;
 }
@@ -368,8 +368,8 @@ export default {
 .question_card {
   width: 92%;
   flex: 1;
-  margin-bottom: 40px;
-  padding: 60px 40px 40px 40px;
+  margin-bottom: 13.33px;
+  padding: 20px 13.33px 13.33px 13.33px;
   flex-direction: column;
   background-image: url('/pkg_test/assets/img/question_card_bg.jpg');
   background-size: 100% 100%;
@@ -378,29 +378,29 @@ export default {
 
 .question_text {
   width: 100%;
-  font-size: 36px;
+  font-size: 12px;
   color: #333333;
   font-weight: bold;
-  line-height: 50px;
-  margin-bottom: 60px;
-  margin-top: 20px;
+  line-height: 16.67px;
+  margin-bottom: 20px;
+  margin-top: 6.67px;
 }
 
 /* 选项列表 */
 .options_container {
   width: 100%;
   flex-direction: column;
-  margin-bottom: 40px;
+  margin-bottom: 13.33px;
   flex: 1;
 }
 
 .option_item {
   width: 100%;
-  min-height: 110px;
+  min-height: 36.67px;
   background-color: #e8f4fd;
-  border-radius: 55px;
-  margin-bottom: 30px;
-  padding: 20px 30px;
+  border-radius: 18.33px;
+  margin-bottom: 10px;
+  padding: 6.67px 10px;
   flex-direction: row;
   align-items: center;
 }
@@ -410,13 +410,13 @@ export default {
 }
 
 .option_label {
-  width: 64px;
-  height: 64px;
+  width: 21.33px;
+  height: 21.33px;
   background-color: #29b6f6;
-  border-radius: 32px;
+  border-radius: 10.67px;
   justify-content: center;
   align-items: center;
-  margin-right: 24px;
+  margin-right: 8px;
 }
 
 .label_selected {
@@ -424,7 +424,7 @@ export default {
 }
 
 .label_text {
-  font-size: 32px;
+  font-size: 10.67px;
   color: #ffffff;
   font-weight: bold;
 }
@@ -435,7 +435,7 @@ export default {
 
 .option_text {
   flex: 1;
-  font-size: 30px;
+  font-size: 10px;
   color: #333333;
   lines: 2;
 }
@@ -446,22 +446,22 @@ export default {
 }
 
 .check_icon {
-  width: 44px;
-  height: 44px;
-  margin-left: 20px;
+  width: 14.67px;
+  height: 14.67px;
+  margin-left: 6.67px;
   object-fit: contain;
 }
 
 /* 下一题按钮 */
 .next_btn {
   width: 100%;
-  height: 100px;
+  height: 33.33px;
   background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-  border-radius: 50px;
+  border-radius: 16.67px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
-  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-top: 6.67px;
 }
 
 .next_btn_active {
@@ -469,7 +469,7 @@ export default {
 }
 
 .next_btn_text {
-  font-size: 36px;
+  font-size: 12px;
   color: #ffffff;
   font-weight: bold;
 }
@@ -477,10 +477,10 @@ export default {
 /* 提示文字 */
 .tip_text {
   width: 100%;
-  font-size: 22px;
+  font-size: 7.33px;
   color: #ff5252;
-  line-height: 30px;
+  line-height: 10px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 3.33px;
 }
 </style>

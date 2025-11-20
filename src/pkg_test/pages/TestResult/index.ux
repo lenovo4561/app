@@ -179,33 +179,33 @@ export default {
 /* 顶部导航 */
 .header {
   width: 100%;
-  height: 100px;
-  padding: 0 30px;
+  height: 33.33px;
+  padding: 0 10px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
 .back-btn-wrapper {
-  width: 60px;
-  height: 60px;
+  width: 20px;
+  height: 20px;
   justify-content: center;
   align-items: flex-start;
 }
 
 .back-btn {
-  width: 40px;
-  height: 40px;
+  width: 13.33px;
+  height: 13.33px;
 }
 
 .header-title {
-  font-size: 36px;
+  font-size: 12px;
   color: #000000;
   font-weight: bold;
 }
 
 .header-placeholder {
-  width: 60px;
+  width: 20px;
 }
 
 /* 滚动区域 */
@@ -215,81 +215,81 @@ export default {
 }
 
 .content-wrapper {
-  padding: 20px 30px 50px 30px;
+  padding: 6.67px 10px 16.67px 10px;
   flex-direction: column;
 }
 
 /* Stack 布局 */
 .result-stack {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 6.67px;
 }
 
 .card-container {
   width: 100%;
-  padding-top: 60px; /* 给人物头部留出空间 */
+  padding-top: 20px; /* 给人物头部留出空间 */
   flex-direction: column;
 }
 
 .result-card {
   width: 100%;
   background-color: #ffffff;
-  border-radius: 30px;
-  padding: 40px;
-  padding-top: 60px;
+  border-radius: 10px;
+  padding: 13.33px;
+  padding-top: 20px;
   flex-direction: column;
-  min-height: 900px;
+  min-height: 300px;
 }
 
 .tag-wrapper {
   background-color: #29b6f6;
-  border-radius: 8px;
-  padding: 8px 16px;
+  border-radius: 2.67px;
+  padding: 2.67px 5.33px;
   align-self: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 6.67px;
 }
 
 .tag-text {
   color: #ffffff;
-  font-size: 24px;
+  font-size: 8px;
   font-weight: bold;
 }
 
 .title-wrapper {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   width: 100%;
 }
 
 .result-title {
-  font-size: 36px;
+  font-size: 12px;
   color: #000000;
-  line-height: 50px;
+  line-height: 16.67px;
   font-weight: bold;
   lines: 0;
 }
 
 .title-underline {
   width: 100%;
-  height: 15px;
+  height: 5px;
   object-fit: contain;
-  margin-top: 5px;
+  margin-top: 1.67px;
 }
 
 .desc-wrapper {
   width: 100%;
   flex: 1;
-  margin-top: 60px; /* 确保内容在人物底部开始 */
+  margin-top: 20px; /* 确保内容在人物底部开始 */
   background-image: url('/pkg_main/assets/img1/trophy_decoration.png');
   background-size: contain;
   background-position: bottom right;
   background-repeat: no-repeat;
-  padding-bottom: 40px;
+  padding-bottom: 13.33px;
 }
 
 .result-desc {
-  font-size: 28px;
+  font-size: 9.33px;
   color: #333333;
-  line-height: 48px;
+  line-height: 16px;
   text-align: left;
 }
 
@@ -298,12 +298,12 @@ export default {
   width: 100%;
   justify-content: flex-end; /* 靠右 */
   align-items: flex-start; /* 靠上 */
-  padding-right: 20px;
+  padding-right: 6.67px;
 }
 
 .character-img {
-  width: 260px;
-  height: 320px;
+  width: 86.67px;
+  height: 106.67px;
   object-fit: contain;
 }
 
@@ -311,14 +311,14 @@ export default {
 .button-group {
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 40px;
-  margin-bottom: 30px;
+  margin-top: 13.33px;
+  margin-bottom: 10px;
 }
 
 .btn {
-  width: 330px;
-  height: 90px;
-  border-radius: 45px;
+  width: 110px;
+  height: 30px;
+  border-radius: 15px;
   justify-content: center;
   align-items: center;
 }
@@ -333,16 +333,16 @@ export default {
 
 .btn-text {
   color: #ffffff;
-  font-size: 32px;
+  font-size: 10.67px;
   font-weight: bold;
 }
 
 /* 底部提示 */
 .footer-tip {
-  font-size: 24px;
+  font-size: 8px;
   color: #f44336;
-  line-height: 36px;
+  line-height: 12px;
   text-align: left;
-  padding: 0 10px;
+  padding: 0 3.33px;
 }
 </style>

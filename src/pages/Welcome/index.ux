@@ -109,7 +109,7 @@ export default {
     router.push({
       uri: '/pkg_other/pages/Webview',
       params: {
-        url: 'https://www.example.com/privacy', // 替换为实际链接
+        url: 'https://api.51dsp.cn/index/privacy.do?pn=com.zjfenghecp.windseed',
         title: '隐私政策'
       }
     })
@@ -120,7 +120,7 @@ export default {
     router.push({
       uri: '/pkg_other/pages/Webview',
       params: {
-        url: 'https://www.example.com/agreement', // 替换为实际链接
+        url: 'https://api.51dsp.cn/index/agreement.do?pn=com.zjfenghecp.windseed',
         title: '用户协议'
       }
     })
@@ -176,19 +176,19 @@ export default {
 }
 
 .app_logo {
-  width: 93px;
-  height: 93px;
-  border-radius: 23px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 11px rgba(0, 188, 212, 0.3);
+  width: 31px;
+  height: 31px;
+  border-radius: 7.67px;
+  margin-bottom: 6.67px;
+  box-shadow: 0 1.33px 3.67px rgba(0, 188, 212, 0.3);
 }
 
 .app_name {
-  font-size: 21px;
+  font-size: 7px;
   color: #000000;
   font-weight: bold;
-  letter-spacing: 3px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+  text-shadow: 0 0.33px 1px rgba(0, 0, 0, 0.2);
 }
 
 .bottom_illustration {

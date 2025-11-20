@@ -45,7 +45,7 @@ export default {
 
 <style>
 .menu_wrap {
-  height: 37px;
+  height: 38px;
   position: fixed;
   z-index: 3;
   bottom: 0;
@@ -70,6 +70,6 @@ export default {
 }
 
 .menu-item .title text {
-  font-size: 8px;
+  font-size: 9px;
 }
 </style>
