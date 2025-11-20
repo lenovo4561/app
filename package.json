@@ -5,7 +5,7 @@
   "scripts": {
     "start": "hap server --watch",
     "server": "hap server",
-    "build": "hap build",
+    "build": "hap build && node ./scripts/rename_package.js",
     "release": "hap release && node ./scripts/rename_package.js",
     "watch": "hap watch",
     "debug": "hap debug",

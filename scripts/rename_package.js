@@ -14,7 +14,7 @@ function renamePackage() {
 
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
     const packageName = manifest.package
-    const versionCode = manifest.versionCode || '1'
+    const versionName = manifest.versionName || '1.0.0'
 
     if (!fs.existsSync(distDir)) {
       console.error('dist directory not found')
@@ -37,8 +37,8 @@ function renamePackage() {
 
     packageFiles.forEach(file => {
       const ext = path.extname(file)
-      // 目标格式: 包名.release.production.版本号.后缀
-      const newName = `${packageName}.release.production.${versionCode}${ext}`
+      // 目标格式: 包名.release.production.版本名称.后缀
+      const newName = `${packageName}.release.production.${versionName}${ext}`
       const oldPath = path.join(distDir, file)
       const newPath = path.join(distDir, newName)
 
