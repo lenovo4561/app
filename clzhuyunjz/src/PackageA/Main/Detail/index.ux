@@ -1,0 +1,281 @@
+<template>
+  <div class="wrapper flex_column">
+    <div class="bg"></div>
+    <div class="head">
+      <text class="title">账单详情</text>
+      <image src="../images/back.png" @click="back"></image>
+    </div>
+
+    <div class="box" if="{{detailData}}">
+      <div class="square">
+        <image src=".{{detailData.icon}}"></image>
+      </div>
+      <text class="amount">{{ detailData.name }}</text>
+
+      <image src="../images/line-x.png" class="line"></image>
+      <div class="label ">
+        <div>
+          <image src="../images/leixing.png"></image>
+          <text class="label-text">类型</text>
+        </div>
+        <text class=""
+          >¥{{ detailData.type == 'income' ? '收入' : '支出' }}</text
+        >
+      </div>
+      <div class="label ">
+        <div>
+          <image src="../images/jine.png"></image>
+          <text class="label-text">金额</text>
+        </div>
+        <text
+          class="{{detailData.type=='income'?'income-text':'expense-text'}}"
+          >{{ detailData.amount }}</text
+        >
+      </div>
+      <div class="label">
+        <div>
+          <image src="../images/riqi.png"></image>
+          <text class="label-text">日期</text>
+        </div>
+
+        <text class="">{{ detailData.day }}</text>
+      </div>
+      <div class="label">
+        <text class="label-text">备注</text>
+        <text class="">{{ detailData.memo || '~' }}</text>
+      </div>
+    </div>
+
+    <div class="btn">
+      <text @click="del">删除</text>
+      <text @click="edit" class="edit">修改</text>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import prompt from '@system.prompt'
+import storage from '@system.storage'
+
+export default {
+  data() {
+    return {
+      listData: [],
+      detailData: '',
+      index: ''
+    }
+  },
+  async onInit(options) {
+    this.initPage()
+    this.detailData = JSON.parse(options.data)
+
+    this.index = options.index
+  },
+  edit() {
+    let index = this.listData.findIndex(item => {
+      return (
+        this.detailData.id == item.id &&
+        item.amount == this.detailData.amount &&
+        item.name == this.detailData.name
+      )
+    })
+    this.detailData.editIndex = index
+    router.replace({
+      uri: 'PackageA/Main',
+      params: { editForm: JSON.stringify(this.detailData) }
+    })
+  },
+  del() {
+    let _this = this
+    let index = this.listData.findIndex(item => {
+      return (
+        this.detailData.id == item.id &&
+        item.amount == this.detailData.amount &&
+        item.name == this.detailData.name
+      )
+    })
+    // console.log(index)
+    this.listData.splice(index, 1)
+
+    storage.set({
+      key: 'bil_data',
+      value: JSON.stringify(_this.listData),
+      success: function() {
+        _this.pageA = new BroadcastChannel('channel1')
+        _this.pageA.postMessage('success')
+        router.back()
+      },
+      fail: function(data, code) {
+        console.error(`存储图片信息失败, code = ${code}`, data)
+      }
+    })
+  },
+  back() {
+    router.back()
+  },
+  initPage() {
+    let _this = this
+
+    storage.get({
+      key: 'bil_data',
+      success: function(data) {
+        if (data) {
+          try {
+            _this.listData = JSON.parse(data)
+          } catch (e) {
+            console.error('解析已缓存列表失败:', e)
+          }
+        } else {
+        }
+      },
+      fail: function(data, code) {
+        console.error(`失败, code = ${code}`, data)
+      }
+    })
+  }
+}
+</script>
+
+<style lang="less">
+.wrapper {
+  width: 100%;
+  flex-direction: column;
+  padding-bottom: 50px;
+  min-height: 100%;
+  padding: 0 10px 50px;
+  background-color: #fafafa;
+
+  .bg {
+    width: 250px;
+    height: 190px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url(../images/page-bg.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  .head {
+    align-items: center;
+    height: 30px;
+    line-height: 30px;
+    text {
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      font-size: 10px;
+      color: #000;
+    }
+    image {
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      top: 10px;
+      left: 4px;
+    }
+  }
+  .page-logo {
+    width: 130px;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+  }
+  .box {
+    width: 230px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 12px 10px;
+    flex-direction: column;
+    .square {
+      width: 70px;
+      height: 70px;
+      border-radius: 35px;
+      background-color: rgba(0, 116, 255, 0.1);
+      margin: 0 auto;
+      image {
+        width: 36px;
+        height: 36px;
+        margin: 17px;
+      }
+    }
+    .amount {
+      font-size: 12px;
+      font-weight: bold;
+      text-align: center;
+      color: #262626;
+      margin: 6px auto;
+    }
+    .type {
+      width: 34px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      background-color: rgba(136, 102, 249, 0.2);
+      color: #333;
+      font-size: 8px;
+      border-radius: 10px;
+      margin: 0 auto;
+    }
+    .line {
+      width: 100%;
+      object-fit: contain;
+      margin-top: 24px;
+    }
+    .label {
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      > div {
+        align-items: center;
+        text {
+          font-size: 7px;
+        }
+        image {
+          width: 10px;
+          height: 10px;
+          margin-right: 2px;
+        }
+      }
+
+      > text {
+        color: #262626;
+        font-size: 7px;
+      }
+      .label-text {
+        font-size: 7px;
+        color: #999999;
+      }
+      .expense-text {
+        color: #ff5820;
+      }
+      .income-text {
+        color: #39d98f;
+      }
+    }
+  }
+
+  .btn {
+    justify-content: space-between;
+    margin-top: 30px;
+
+    > text {
+      background-color: #fff;
+      border-radius: 20px;
+      height: 36px;
+      line-height: 36px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: #ff5820;
+      width: 100px;
+      border: 1px solid #ff5820;
+    }
+    .edit {
+      background-color: #0074ff;
+      color: #fff;
+      border: 1px solid transparent;
+    }
+  }
+}
+</style>

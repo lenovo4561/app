@@ -1,0 +1,45 @@
+<template>
+  <div class="container">
+    <div class="agreement">
+      <web src="{{url}}"></web>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data: {
+    url: ''
+  },
+  onInit(options) {
+    this.url =
+      options.type == 1
+        ? 'https://api.51dsp.cn/index/privacy.do?pn=com.clzhuyunjz.bamboozy'
+        : 'https://api.51dsp.cn/index/agreement.do?pn=com.clzhuyunjz.bamboozy'
+    console.log(this.url)
+  }
+}
+</script>
+
+<style lang="less">
+.container {
+  flex-direction: column;
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+  height: 100%;
+}
+.agreement {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  height: 100%;
+  .fb32 {
+    line-height: 48px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-weight: 600;
+    color: #111;
+  }
+}
+</style>

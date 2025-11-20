@@ -1,0 +1,120 @@
+<template>
+  <div class="mask">
+    <div class="agreement-wrap">
+      <text class="title">隐私政策</text>
+      <list class="agreement">
+        <list-item type="text">
+          <div class="cont">
+            <text class="context" style="font-size: 10px;">
+              感谢您使用{{
+                quickAppName
+              }}！我们非常重视您的个人信息和隐私保护，为了更好的保障您的个人权益，在您使用我们产品，请认真阅读：《隐私政策》如果您同意以上协议内容，请点击“同意”，开始我们的产品和服务
+            </text>
+          </div>
+        </list-item>
+      </list>
+      <text class="remind"
+        >详细阅读 <a @click="toA" class="link">隐私政策</a></text
+      >
+      <div class="btn-group">
+        <text class="btn reject-btn" @click="refuse">不同意</text>
+        <text class="btn" @click="agree">同意</text>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import storage from '@system.storage'
+import router from '@system.router'
+import { config } from '../../config.json'
+
+export default {
+  props: {
+    isShow: {
+      default: false
+    }
+  },
+  data() {
+    return {
+      quickAppName: ''
+    }
+  },
+  onInit() {
+    this.quickAppName = config.quickAppName
+  },
+  agree() {
+    storage.set({ key: 'PRIVACY', value: 'agree' })
+    this.$emit('agreeEvt')
+  },
+  refuse() {
+    storage.set({ key: 'PRIVACY', value: '' })
+    this.$app.exit()
+  },
+  toA() {
+    router.push({ uri: '/PackageA/Main/agreement' })
+  }
+}
+</script>
+<style lang="less">
+.mask {
+  position: fixed;
+  background-color: rgba(17, 17, 17, 0.4);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+.agreement-wrap {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 190px;
+  height: 200px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  /* bottom: 600px; */
+  .title {
+    line-height: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #111;
+  }
+  .agreement {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-bottom: 10px;
+  }
+  .remind {
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 10px;
+    .link {
+      color: #cca066;
+    }
+  }
+  .btn-group {
+    display: flex;
+    justify-content: space-between;
+  }
+  .btn {
+    width: 70px;
+    height: 27px;
+    text-align: center;
+    font-size: 10px;
+    color: #fff;
+    background-color: #cca066;
+    border-radius: 14px;
+  }
+  .reject-btn {
+    background-color: #fff;
+    color: #111;
+    border: 1px solid #111;
+  }
+}
+</style>

@@ -1,0 +1,40 @@
+<script>
+/**
+ * 应用级别的配置，供所有页面公用
+ */
+
+const $utils = require('./helper/utils').default
+const $apis = require('./helper/apis').default
+import app from '@system.app'
+import device from '@system.device'
+/* @desc: 注入方法至全局 global,以便页面调用 */
+const hook2global = global.__proto__ || global
+hook2global.$utils = $utils
+hook2global.$apis = $apis
+
+export default {
+  onCreate() {
+    this.userInit()
+  },
+  async userInit() {
+    let oaidRes = await device.getOAID(),
+      deviceInfo = await device.getInfo(),
+      userId = await device.getUserId(),
+      appInfo = app.getInfo()
+    let oaid = (oaidRes && oaidRes.data && oaidRes.data.oaid) || '',
+      android = (userId && userId.data && userId.data.userId) || ''
+    let param = {
+      oaid: oaid,
+      android: android,
+      model: deviceInfo.data.model || '',
+      brand: deviceInfo.data.brand || '',
+      pn: appInfo.packageName,
+      app_version: appInfo.versionName,
+      os_version: deviceInfo.data.osVersionName || ''
+    }
+
+    let res = await $apis.example.userInit(param)
+    console.log('res', JSON.stringify(res))
+  }
+}
+</script>

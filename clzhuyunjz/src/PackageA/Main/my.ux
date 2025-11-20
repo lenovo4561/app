@@ -1,0 +1,188 @@
+<template>
+  <div class="wrapper flex_column">
+    <div class="bg"></div>
+    <text class="title">我的</text>
+    <image src="./images/page-logo.png" class="page-logo"></image>
+    <div class="userinfo">
+      <image src="{{userinfo.avatar}}"></image>
+      <text>{{ userinfo.name }}</text>
+    </div>
+    <div class="box">
+      <text>其他服务</text>
+      <div type="function" class="functionItem flex_column">
+        <div
+          for="( index, item ) in functionList"
+          style="background-color:#fff;"
+          @click="toSkip(index)"
+        >
+          <div class="fun-label">
+            <image src="{{item.icon}}"></image>
+            <text class="title">{{ item.text }}</text>
+          </div>
+
+          <image src="./images/right.png"></image>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import router from '@system.router'
+import prompt from '@system.prompt'
+import { config } from '../../config.json'
+export default {
+  data: {
+    title: '个人中心',
+    userinfo: '',
+    functionList: [
+      {
+        text: '隐私政策',
+        icon: './images/yinsizhengce.png'
+      },
+
+      { text: '用户协议', icon: './images/yonghuxieyi.png' }
+    ],
+    platformVersion: '',
+    logoUrl: '../../assets/images/logo.png',
+    skipIconUrl: '../../assets/images/right.png',
+    quickName: ''
+  },
+
+  props: [],
+
+  onInit() {
+    this.quickName = config.quickAppName
+    this.$page.setTitleBar({ backgroundColor: '#3AABF6' })
+    const app = require('@system.app')
+    this.platformVersion = app.getInfo().versionName
+    this.userinfo = this.generateRandomIdentity()
+  },
+  // 生成随机身份
+  generateRandomIdentity() {
+    // 随机选择名字
+
+    let userName = config.userName.split(',')
+    let avatarList = config.userAvator.split(',')
+    const randomName = userName[Math.floor(Math.random() * userName.length)]
+    const randomAvator =
+      'https://app-static-1305655563.cos.ap-guangzhou.myqcloud.com/quickapp/oppo/aibz/erciyuanHead2/' +
+      avatarList[Math.floor(Math.random() * avatarList.length)]
+    const ranking = Math.floor(Math.random() * 100)
+
+    return { name: randomName, avatar: randomAvator }
+  },
+  async toSkip(index) {
+    const storage = require('@system.storage')
+    let clearStorage = async () => {
+        let val = await storage.get({ key: 'agreeFlag' })
+        await storage.clear()
+        storage.set({ key: 'agreeFlag', value: val.data || '' })
+      },
+      skipList = {
+        0: () =>
+          router.push({ uri: 'PackageA/Main/agreement', params: { type: 1 } }),
+
+        1: () =>
+          router.push({ uri: 'PackageA/Main/agreement', params: { type: 2 } })
+      }
+    skipList[index]()
+  }
+}
+</script>
+
+<style lang="less">
+.wrapper {
+  flex-direction: column;
+  padding: 0 10px;
+  background-color: #fafafc;
+  .bg {
+    width: 250px;
+    height: 190px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url(./images/page-bg.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  .page-logo {
+    width: 130px;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+  }
+  .title {
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    color: #000;
+    font-weight: bold;
+    line-height: 28px;
+  }
+  .userinfo {
+    margin-top: 40px;
+    width: 100%;
+    align-items: center;
+
+    image {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+    }
+    text {
+      font-size: 10px;
+      font-weight: bold;
+      margin-left: 5px;
+      color: #000000;
+    }
+  }
+}
+
+.box {
+  width: 226px;
+
+  background-color: #ffffff;
+  flex-direction: column;
+  border-radius: 12px;
+  margin: 12px 0px 0;
+  > text {
+    font-size: 10px;
+    color: #000;
+    font-weight: bold;
+    padding: 9px 10px;
+  }
+}
+.functionItem {
+  flex-direction: column;
+  > div {
+    width: 100%;
+    height: 36px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 10px 0;
+    .fun-label {
+      display: flex;
+      align-items: center;
+      width: 80px;
+      image {
+        width: 15px;
+        height: 15px;
+        /* margin-right: 9px; */
+      }
+      .title {
+        font-size: 10px;
+        color: #000000;
+        line-height: 13px;
+      }
+    }
+
+    > image {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+</style>

@@ -1,0 +1,238 @@
+<template>
+  <div class="calendar-container">
+    <!-- 月份切换与显示 -->
+    <div class="header">
+      <image src="../images/zuo.png" onclick="switchMonth(-1)"></image>
+
+      <text class="title">{{ currentYear }}年{{ currentMonth + 1 }}月</text>
+      <image src="../images/you.png" onclick="switchMonth(1)"></image>
+    </div>
+
+    <div class="box">
+      <!-- 星期标题 -->
+      <div class="weekdays">
+        <text class="weekday" for="weekday in weekDaysList">{{ weekday }}</text>
+      </div>
+
+      <!-- 日期网格 -->
+      <div class="days-grid">
+        <div
+          class="day-item {{ day.isToday ? 'today' : '' }} {{ day.isDisabled ? 'disabled' : '' }}"
+          for="day in calendarDaysArray"
+          onclick="selectDay(day)"
+        >
+          <text class="day-number">{{ day.day }}</text>
+          <div class="today-badge" if="day.select">
+            <text if="{{day.isToday}}">今日</text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="less">
+.calendar-container {
+  width: 100%;
+  padding: 20px 10px 0;
+
+  flex-direction: column;
+}
+
+.header {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 15px;
+  image {
+    width: 9px;
+    height: 9px;
+  }
+  .title {
+    font-size: 10px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 9px;
+  }
+}
+.box {
+  border-radius: 8px;
+  padding: 20px 6px 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  flex-direction: column;
+  height: 240px;
+  .weekdays {
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+  .weekday {
+    flex: 1;
+    text-align: center;
+    font-size: 8px;
+    color: #646464;
+  }
+
+  .days-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .day-item {
+    width: 14.28%; /* 100% / 7 */
+    aspect-ratio: 1;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .day-number {
+    font-size: 10px;
+    height: 38px;
+    line-height: 38px;
+    color: #0d0b0c;
+  }
+
+  .disabled {
+    .day-number {
+      color: #b1b1b1;
+    }
+  }
+  .today {
+    .day-number {
+      color: #0074ff;
+      font-weight: bold;
+    }
+  }
+  .today-badge {
+    position: absolute;
+    width: 30px;
+    height: 38px;
+    text-align: center;
+
+    border-radius: 3px;
+    background-color: rgba(0, 116, 255, 0.06);
+    top: 0px;
+
+    text {
+      font-size: 7px;
+      width: 100%;
+      text-align: center;
+      color: #007dff;
+      position: absolute;
+      top: 2px;
+    }
+  }
+}
+</style>
+
+<script>
+export default {
+  data: {
+    // 初始化为当前日期
+    currentDate: new Date(),
+    selectedDate: null,
+    currentYear: '',
+    calendarDaysArray: [],
+    currentMonth: '',
+    // 星期标题
+    weekDaysList: ['日', '一', '二', '三', '四', '五', '六']
+  },
+  onInit() {
+    // 初始化日历数据
+    let date = new Date()
+    this.currentYear = date.getFullYear()
+    this.currentMonth = date.getMonth()
+    // this.updateCalendarDays();
+    this.selectedDate = new Date()
+
+    this.calendarDaysArray = this.generateCalendarDays(
+      this.currentYear,
+      this.currentMonth
+    )
+  },
+  computed: {
+    // 计算当前显示的年月
+    // currentYear() {
+    //   return this.currentDate.getFullYear();
+    // },
+    // currentMonth() {
+    //   return this.currentDate.getMonth();
+    // },
+    // 生成日历数组
+    // calendarDaysArray() {
+    //   return ;
+    // }
+  },
+  generateCalendarDays(year, month) {
+    let days = []
+    let today = new Date()
+    // 重置today的时间部分为0，以便准确比较日期
+    today.setHours(0, 0, 0, 0)
+
+    // 当月第一天
+    let firstDayOfMonth = new Date(year, month, 1)
+    // 当月最后一天
+    let lastDayOfMonth = new Date(year, month + 1, 0)
+
+    // 第一天是星期几（0-6，对应周日到周六）
+    let firstDayWeek = firstDayOfMonth.getDay()
+
+    // 上月补白：当月第一天是周三，那么周日到周二（即前3天）是空白
+    let leadingBlankDays = firstDayWeek
+    for (let i = 0; i < leadingBlankDays; i++) {
+      days.push({ day: '' })
+    }
+
+    // 当月日期
+    for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
+      let date = new Date(year, month, i)
+
+      date.setHours(0, 0, 0, 0)
+
+      let isToday = date.getTime() === today.getTime()
+
+      // 将今天之前的所有日期置灰
+      let isDisabled = date.getTime() < today.getTime()
+
+      // 检查是否是选中的日期
+      let isSelected =
+        this.selectedDate &&
+        date.getFullYear() === this.selectedDate.getFullYear() &&
+        date.getMonth() === this.selectedDate.getMonth() &&
+        date.getDate() === this.selectedDate.getDate()
+
+      days.push({
+        day: i,
+        date: date,
+        isToday: isToday,
+        select: isToday,
+        isDisabled: isDisabled,
+        isSelected: isSelected
+      })
+    }
+    return days
+  },
+  switchMonth(offset) {
+    // 切换月份
+    // this.currentDate = new Date(this.currentYear, this.currentMonth + offset, 1);
+    this.currentMonth = this.currentMonth + offset
+    this.calendarDaysArray = []
+    setTimeout(() => {
+      this.calendarDaysArray = this.generateCalendarDays(
+        this.currentYear,
+        this.currentMonth
+      )
+    }, 50)
+  },
+  selectDay(day) {
+    // 处理日期选择，这里只是示例，你可以添加自己的逻辑
+    console.log('选中日期:', day)
+    this.calendarDaysArray.forEach(element => {
+      element.select = false
+    })
+    day.select = true
+    this.$emit('changeData', {
+      data: day
+    })
+  }
+}
+</script>
