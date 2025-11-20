@@ -188,7 +188,7 @@ export default {
 
   onShow() {
     // 每次显示页面时重置测试
-    this.resetTest()
+    // this.resetTest()
   },
 
   resetTest() {
@@ -229,9 +229,14 @@ export default {
   },
 
   selectOption(evt) {
-    const index = evt.target.attr.dataIndex
+    // 兼容处理：优先使用 currentTarget 获取绑定事件元素上的属性
+    const attr = (evt.currentTarget && evt.currentTarget.attr) || (evt.target && evt.target.attr) || {};
+    const index = attr.dataIndex !== undefined ? attr.dataIndex : attr.dataindex;
+    
     console.log('选择答案:', index)
-    this.selectedAnswer = parseInt(index)
+    if (index !== undefined && index !== null) {
+      this.selectedAnswer = parseInt(index)
+    }
   },
 
   nextQuestion() {

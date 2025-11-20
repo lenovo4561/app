@@ -56,6 +56,10 @@ export default {
     }
   },
 
+  onDestroy() {
+    console.log('Webview页面销毁')
+  },
+
   onError(evt) {
     console.error('页面加载错误:', evt.detail)
   }

@@ -42,7 +42,7 @@
 
             <!-- 精选测评列表 -->
             <block for="(index, item) in testList">
-              <list-item type="test-item">
+              <list-item type="{{index === 0 ? 'test-item-first' : 'test-item'}}">
                 <div
                   class="test_item"
                   style="padding-bottom: {{index === testList.length - 1 ? '43px' : '7px'}}"
@@ -50,7 +50,7 @@
                   <div
                     class="test_item_content"
                     onclick="startDimensionTest"
-                    data-index="{{index}}"
+                    data-index="{{index + ''}}"
                   >
                     <image class="test_image" src="{{item.image}}"></image>
                     <div
@@ -306,13 +306,20 @@ export default {
     // 精选测评项点击
     // 兼容处理：优先使用 currentTarget 获取绑定事件元素上的属性
     // 快应用中 data-index 属性通常在 attr.dataIndex 中
-    const index = (evt.currentTarget && evt.currentTarget.attr && evt.currentTarget.attr.dataIndex) || 
-                  (evt.target && evt.target.attr && evt.target.attr.dataIndex);
+    const attr = (evt.currentTarget && evt.currentTarget.attr) || (evt.target && evt.target.attr) || {};
+    const index = attr.dataIndex !== undefined ? attr.dataIndex : attr.dataindex;
+    
+    console.log('点击测评项, index:', index);
+
+    if (index === undefined || index === null) {
+      console.error('无法获取测评索引, evt:', JSON.stringify(evt));
+      return;
+    }
     
     const test = this.testList[parseInt(index)]
 
     if (!test) {
-      console.error('未找到测评数据, index:', index, 'evt:', JSON.stringify(evt))
+      console.error('未找到测评数据, index:', index)
       return
     }
 

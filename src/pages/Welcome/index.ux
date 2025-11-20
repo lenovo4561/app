@@ -22,9 +22,9 @@
         <div class="modal_text_wrapper">
           <text class="modal_text">
             <span>尊敬的用户：欢迎使用“风禾测评”，在使用前请仔细阅读</span>
-            <span class="link" onclick="openPrivacy">《隐私政策》</span>
+            <a class="link" onclick="openPrivacy">《隐私政策》</a>
             <span>及</span>
-            <span class="link" onclick="openAgreement">《用户协议》</span>
+            <a class="link" onclick="openAgreement">《用户协议》</a>
             <span
               >，我们将严格遵守您同意的各项条款使用您的信息，以便为您提供更好的服务。点击“同意”意味着您自愿遵守《隐私政策》，我们将严格保护您的个人信息，确保信息安全。</span
             >
@@ -101,6 +101,7 @@ export default {
   },
 
   handleDisagree() {
+    console.log('用户点击不同意，退出应用')
     app.terminate()
   },
 
